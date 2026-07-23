@@ -45,6 +45,11 @@ button{border:0;background:none;cursor:pointer;}
 .section{padding-block:var(--section-space);}
 .section--dark{color:#fff;background:var(--color-dark);}
 
+.section-header{display:grid;grid-template-columns:minmax(120px,0.35fr) 1fr;gap:32px;margin-bottom:clamp(48px,7vw,80px);padding-top:24px;border-top:1px solid var(--color-line);}
+.section--dark .section-header{border-color:rgba(255,255,255,0.25);}
+.section-label{margin:0;color:var(--color-muted);font-family:var(--font-en);font-size:13px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;}
+.section-title{max-width:900px;margin:0;font-size:clamp(30px,5vw,72px);font-weight:700;line-height:0.98;letter-spacing:-0.055em;}
+
 /* Header */
 .site-header{position:fixed;z-index:100;top:0;left:0;width:100%;padding:22px var(--page-padding);transition:color var(--transition),background var(--transition);}
 .site-header.is-scrolled{background:rgba(244,243,239,0.92);border-bottom:1px solid var(--color-line);backdrop-filter:blur(18px);}
@@ -99,14 +104,6 @@ button{border:0;background:none;cursor:pointer;}
 .reset-btn{min-height:38px;padding:7px 14px;border-bottom:1px solid currentColor;color:var(--color-muted);font-size:12px;white-space:nowrap;}
 .reset-btn:hover{color:var(--color-text);}
 
-/* Highlighting Search Terms */
-mark.search-highlight {
-  background-color: #ffeb3b;
-  color: #000;
-  padding: 0 2px;
-  border-radius: 2px;
-}
-
 /* AI Grid */
 .ai-grid-section{padding-block:clamp(40px,6vw,80px);}
 .ai-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1px;border:1px solid var(--color-line);}
@@ -147,6 +144,20 @@ mark.search-highlight {
 .strength-label{font-family:var(--font-en);font-size:10px;color:var(--color-muted);width:62px;flex-shrink:0;text-transform:uppercase;letter-spacing:0.04em;}
 .strength-bar-bg{flex:1;height:3px;background:rgba(17,17,17,0.08);border-radius:2px;overflow:hidden;}
 .strength-bar{height:100%;border-radius:2px;transition:width 0.6s cubic-bezier(0.22,1,0.36,1);}
+
+/* Category Legend */
+.legend-section{padding:40px var(--page-padding);border-top:1px solid var(--color-line);border-bottom:1px solid var(--color-line);background:#fff;}
+.legend-inner{display:flex;align-items:center;gap:24px;max-width:var(--container);margin-inline:auto;flex-wrap:wrap;}
+.legend-title{font-family:var(--font-en);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-muted);flex-shrink:0;}
+.legend-items{display:flex;gap:16px;flex-wrap:wrap;}
+.legend-dot{display:flex;align-items:center;gap:6px;font-family:var(--font-en);font-size:12px;color:var(--color-muted);}
+.legend-dot::before{content:"";width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.legend-dot.video::before{background:#7c3aed;}
+.legend-dot.image::before{background:#0891b2;}
+.legend-dot.audio::before{background:#059669;}
+.legend-dot.animation::before{background:#d97706;}
+.legend-dot.writing::before{background:#dc2626;}
+.legend-dot.data::before{background:#4f46e5;}
 
 /* Compare Panel */
 .compare-panel{position:fixed;bottom:0;left:0;right:0;z-index:200;transform:translateY(100%);transition:transform var(--transition);background:var(--color-dark);color:#fff;border-top:1px solid rgba(255,255,255,0.15);}
@@ -196,12 +207,57 @@ mark.search-highlight {
 .footer-links a:hover{color:var(--color-accent);}
 .footer-bottom{display:flex;justify-content:space-between;max-width:var(--container);margin:60px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);font-family:var(--font-en);font-size:12px;}
 
+/* Reveal */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.7s ease,transform 0.7s cubic-bezier(0.22,1,0.36,1);}
+.reveal.is-visible{opacity:1;transform:none;}
+
+/* Mobile menu */
+.menu-button{display:none;width:45px;height:45px;border:1px solid currentColor;border-radius:50%;place-items:center;}
+.menu-button span,.menu-button span::before{display:block;width:18px;height:1px;background:currentColor;}
+.menu-button span{position:relative;}
+.menu-button span::before{position:absolute;top:5px;content:"";}
+
 /* No results */
 .no-results{display:none;padding:80px 0;text-align:center;color:var(--color-muted);}
 .no-results.visible{display:block;}
 .no-results-title{font-size:24px;font-weight:700;letter-spacing:-0.03em;margin:0 0 8px;}
 
-/* SOFT ARC THEME */
+@media(max-width:900px){
+  .menu-button{display:grid;}
+  .nav-list{position:fixed;inset:0;z-index:-1;display:flex;flex-direction:column;justify-content:center;color:#fff;background:var(--color-dark);opacity:0;pointer-events:none;transform:translateY(-20px);transition:opacity var(--transition),transform var(--transition);}
+  .menu-open .nav-list{opacity:1;pointer-events:auto;transform:translateY(0);}
+  .nav-link{font-size:clamp(28px,7vw,56px);}
+  .compare-btn{display:none;}
+  .section-header{grid-template-columns:1fr;gap:16px;}
+  .footer-grid{grid-template-columns:1fr;}
+  .search-bar-inner{grid-template-columns:1fr;}
+  .filter-stack{justify-content:flex-start;}
+}
+@media(max-width:600px){
+  .hero-meta{flex-wrap:wrap;gap:24px;}
+  .ai-grid{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;gap:10px;}
+  .search-bar-wrap{top:62px;padding-block:12px;}
+  .filter-group{flex-wrap:nowrap;width:100%;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none;}
+  .filter-group::-webkit-scrollbar{display:none;}
+  .filter-stack{display:grid;grid-template-columns:1fr 1fr auto;width:100%;}
+  .filter-select{width:100%;}
+  .results-bar{align-items:flex-start;flex-direction:column;gap:2px;}
+  .compare-panel-inner{align-items:stretch;}
+  .compare-items{flex-wrap:nowrap;overflow-x:auto;}
+  .compare-actions{width:100%;}
+  .compare-actions button{flex:1;}
+  .modal-overlay{padding:24px 12px;}
+  .modal-header{padding:18px 20px;}
+  .modal-body{padding:20px;}
+  .compare-table{min-width:680px;}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:0.01ms!important;}}
+
+/* =========================================================
+   2026 SOFT ARC THEME
+   Based on the supplied capsule / curved portfolio CSS
+========================================================= */
 :root{
   --color-primary:#ff6666;
   --color-secondary:#5ce8ef;
@@ -219,76 +275,603 @@ mark.search-highlight {
   --transition:.3s ease;
 }
 
-body{background:var(--color-background);color:var(--color-text);font-family:var(--font-zh);line-height:1.55;font-size:20px;}
-.container{width:min(calc(100% - 48px),var(--container));padding-inline:0;}
+body{
+  background:var(--color-background);
+  color:var(--color-text);
+  font-family:var(--font-zh);
+  line-height:1.55;
+}
 
-.site-header{top:0;padding:36px 24px 0;color:#444;pointer-events:none;}
-.site-header.is-scrolled{background:transparent;border:0;backdrop-filter:none;}
-.navbar{width:min(calc(100% - 48px),var(--container));min-height:52px;padding:0 10px 0 24px;background:rgba(255,255,255,.95);border:1px solid rgba(255,255,255,.72);border-radius:var(--radius-pill);box-shadow:0 8px 30px rgba(45,45,45,.1);backdrop-filter:blur(14px);pointer-events:auto;}
-.logo{color:#333;font-size:20px;font-weight:700;letter-spacing:.14em;}
-.logo-mark{width:12px;height:12px;background:var(--color-secondary);border-radius:50%;clip-path:none;}
+.container{
+  width:min(calc(100% - 48px),var(--container));
+  padding-inline:0;
+}
+
+/* Capsule navigation */
+.site-header{
+  top:0;
+  padding:36px 24px 0;
+  color:#444;
+  pointer-events:none;
+}
+.site-header.is-scrolled{
+  background:transparent;
+  border:0;
+  backdrop-filter:none;
+}
+.navbar{
+  width:min(calc(100% - 48px),var(--container));
+  min-height:52px;
+  padding:0 10px 0 24px;
+  background:rgba(255,255,255,.95);
+  border:1px solid rgba(255,255,255,.72);
+  border-radius:var(--radius-pill);
+  box-shadow:0 8px 30px rgba(45,45,45,.1);
+  backdrop-filter:blur(14px);
+  pointer-events:auto;
+}
+.logo{
+  color:#333;
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:.14em;
+}
+.logo-mark{
+  width:12px;
+  height:12px;
+  background:var(--color-secondary);
+  border-radius:50%;
+  clip-path:none;
+}
 .nav-list{gap:36px;}
-.nav-link{padding-block:15px;color:#444;font-family:var(--font-zh);font-size:18px;font-weight:600;transition:color var(--transition),transform var(--transition);}
+.nav-link{
+  padding-block:15px;
+  color:#444;
+  font-family:var(--font-zh);
+  font-size:14px;
+  transition:color var(--transition),transform var(--transition);
+}
 .nav-link:hover{color:var(--color-primary);transform:translateY(-1px);}
 .nav-link::after{bottom:9px;background:var(--color-primary);}
-.compare-btn{min-height:40px;padding:0 20px;color:#fff;background:var(--color-dark);border:0;font-size:17px;}
+.compare-btn{
+  min-height:40px;
+  padding:0 20px;
+  color:#fff;
+  background:var(--color-dark);
+  border:0;
+}
 .compare-btn:hover{background:#111;transform:translateY(-2px);}
-.compare-count{background:var(--color-primary);font-size:14px;}
+.compare-count{background:var(--color-primary);}
 
-.hero{position:relative;min-height:700px;padding:150px var(--page-padding) 92px;align-items:center;color:#fff;background:var(--color-primary);border-radius:0 0 min(44vw,600px) 0;isolation:isolate;}
-.hero-content{width:min(calc(100% - 48px),var(--container));overflow:visible;}
-.hero-eyebrow{margin-bottom:22px;font-size:17px;font-weight:700;letter-spacing:.2em;}
-.hero-title{max-width:980px;font-family:var(--font-en);font-size:clamp(56px,7.5vw,106px);font-weight:300;line-height:.98;letter-spacing:-.045em;}
-.hero-meta{display:grid;grid-template-columns:repeat(3,minmax(140px,190px));gap:16px;margin-top:58px;}
-.hero-stat{padding:18px 20px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);border-radius:24px;backdrop-filter:blur(8px);}
+/* Large curved hero */
+.hero{
+  position:relative;
+  min-height:700px;
+  padding:150px var(--page-padding) 92px;
+  align-items:center;
+  color:#fff;
+  background:var(--color-primary);
+  border-radius:0 0 min(44vw,600px) 0;
+  isolation:isolate;
+}
+.hero::before,.hero::after{
+  position:absolute;
+  width:900px;
+  height:900px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:50%;
+  clip-path:none;
+  content:"";
+  pointer-events:none;
+}
+.hero::before{top:-550px;left:8%;right:auto;aspect-ratio:auto;transform:rotate(-12deg);}
+.hero::after{right:-280px;bottom:-480px;transform:rotate(18deg);}
+.hero-content{
+  width:min(calc(100% - 48px),var(--container));
+  overflow:visible;
+}
+.hero-content::after{
+  position:absolute;
+  right:-210px;
+  bottom:-360px;
+  z-index:-1;
+  width:430px;
+  height:570px;
+  background:var(--color-secondary);
+  border-radius:55% 0 0 55%;
+  content:"";
+  transform:rotate(-4deg);
+}
+.hero-eyebrow{
+  margin-bottom:22px;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.2em;
+}
+.hero-eyebrow::before{width:54px;background:#fff;}
+.hero-title{
+  max-width:980px;
+  font-family:var(--font-en);
+  font-size:clamp(56px,7.5vw,106px);
+  font-weight:300;
+  line-height:.98;
+  letter-spacing:-.045em;
+}
+.hero-title .accent{
+  color:#fff;
+  font-style:normal;
+}
+.hero-meta{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(140px,190px));
+  gap:16px;
+  margin-top:58px;
+}
+.hero-stat{
+  padding:18px 20px;
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.26);
+  border-radius:24px;
+  backdrop-filter:blur(8px);
+}
 .hero-stat-num{color:#fff;font-size:32px;font-weight:400;}
-.hero-stat-label{color:rgba(255,255,255,.78);font-size:16px;line-height:1.45;}
+.hero-stat-label{color:rgba(255,255,255,.78);font-size:11px;}
 
-.search-bar-wrap{top:82px;padding:18px 24px;background:rgba(249,249,249,.88);border:0;backdrop-filter:blur(12px);}
-.search-bar-inner{width:min(calc(100% - 48px),var(--container));padding:18px;background:#fff;border:1px solid rgba(255,255,255,.7);border-radius:32px;box-shadow:0 12px 40px rgba(45,45,45,.09);}
-.search-input{min-height:48px;border-color:rgba(41,41,41,.13);background:#f7f7f7;font-size:18px;}
+/* Geometric feature band */
+.features{
+  position:relative;
+  padding:92px 0 110px;
+  overflow:hidden;
+}
+.features__grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:56px;
+  max-width:820px;
+  margin-inline:auto;
+}
+.feature{text-align:center;}
+.feature__icon{position:relative;width:92px;height:92px;margin:0 auto 22px;}
+.feature__icon--triangle::before{
+  position:absolute;
+  inset:14px;
+  border-right:2px solid #666;
+  border-bottom:2px solid #666;
+  content:"";
+  transform:rotate(60deg);
+}
+.feature__icon--square::before,.feature__icon--square::after{
+  position:absolute;
+  inset:16px;
+  border:2px solid #666;
+  content:"";
+  transform:rotate(45deg);
+}
+.feature__icon--square::after{inset:27px;}
+.feature__icon--circle::before,.feature__icon--circle::after{
+  position:absolute;
+  width:60px;
+  height:60px;
+  border:2px solid #666;
+  border-radius:50%;
+  content:"";
+}
+.feature__icon--circle::before{top:22px;left:7px;}
+.feature__icon--circle::after{top:2px;right:5px;}
+.feature__title{margin:0 0 6px;color:#4a4a4a;font-size:18px;font-weight:400;letter-spacing:.04em;}
+.feature__copy{max-width:220px;margin:auto;color:#888;font-size:13px;}
+
+/* Search capsule */
+.search-bar-wrap{
+  top:82px;
+  padding:18px 24px;
+  background:rgba(249,249,249,.88);
+  border:0;
+  backdrop-filter:blur(12px);
+}
+.search-bar-inner{
+  width:min(calc(100% - 48px),var(--container));
+  padding:18px;
+  background:#fff;
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:32px;
+  box-shadow:0 12px 40px rgba(45,45,45,.09);
+}
+.search-input{
+  min-height:44px;
+  border-color:rgba(41,41,41,.13);
+  background:#f7f7f7;
+}
 .search-input:focus{border-color:var(--color-primary);box-shadow:0 0 0 4px rgba(255,102,102,.11);}
-.filter-btn,.filter-select{min-height:44px;color:#555;background:#fff;border-color:rgba(41,41,41,.13);font-size:16px;font-weight:600;}
+.filter-btn,.filter-select{
+  min-height:38px;
+  color:#555;
+  background:#fff;
+  border-color:rgba(41,41,41,.13);
+}
 .filter-btn:hover,.filter-select:hover{border-color:var(--color-primary);}
-.filter-btn.active,.filter-btn[class*="cat-"].active{color:#fff;background:var(--color-primary);border-color:var(--color-primary);}
+.filter-btn.active,.filter-btn[class*="cat-"].active{
+  color:#fff;
+  background:var(--color-primary);
+  border-color:var(--color-primary);
+}
+.reset-btn{color:#888;}
+.reset-btn:hover{color:var(--color-primary);}
 
-.results-bar{width:min(calc(100% - 48px),var(--container));padding:18px 0;border:0;}
-.results-count{font-family:var(--font-zh);font-size:17px;}
-.results-count strong{color:var(--color-primary);font-size:22px;}
+.results-bar{
+  width:min(calc(100% - 48px),var(--container));
+  padding:18px 0;
+  border:0;
+}
+.results-count{font-family:var(--font-zh);}
+.results-count strong{color:var(--color-primary);font-size:18px;}
 
-.ai-grid-section{padding:56px 0 120px;background:#fff;}
-.ai-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;border:0;}
-.ai-card{min-height:410px;padding:34px;gap:18px;background:linear-gradient(145deg,#fff 0%,#fbfbfb 100%);border:1px solid rgba(41,41,41,.08);border-radius:36px;overflow:hidden;box-shadow:0 12px 32px rgba(45,45,45,.055);}
-.ai-card:hover{background:#fff;box-shadow:0 22px 56px rgba(45,45,45,.11);transform:translateY(-6px);}
-.ai-logo-wrap{width:62px;height:62px;position:relative;overflow:hidden;border:0;border-radius:20px;box-shadow:0 10px 24px rgba(41,41,41,.14);}
-.tool-logo-img{position:absolute;inset:10px;width:calc(100% - 20px);height:calc(100% - 20px);object-fit:contain;opacity:0;transition:opacity .2s ease;}
-.logo-fallback{display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:inherit;font-family:var(--font-en);font-size:17px;font-weight:700;letter-spacing:-.03em;}
+/* Rounded portfolio-inspired cards */
+.ai-grid-section{
+  padding:56px 0 120px;
+  background:#fff;
+}
+.ai-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:30px;
+  border:0;
+}
+.ai-card{
+  min-height:410px;
+  padding:34px;
+  gap:18px;
+  background:linear-gradient(145deg,#fff 0%,#fbfbfb 100%);
+  border:1px solid rgba(41,41,41,.08);
+  border-radius:36px;
+  overflow:hidden;
+  box-shadow:0 12px 32px rgba(45,45,45,.055);
+}
+.ai-card::before{
+  position:absolute;
+  top:-120px;
+  right:-100px;
+  width:270px;
+  height:270px;
+  background:var(--color-secondary);
+  border-radius:50%;
+  content:"";
+  opacity:.16;
+  transition:transform .7s ease;
+}
+.ai-card[data-cats*="video"]::before{background:#a78bfa;}
+.ai-card[data-cats*="image"]::before{background:#67e8f9;}
+.ai-card[data-cats*="audio"]::before{background:#6ee7b7;}
+.ai-card[data-cats*="animation"]::before{background:#fcd34d;}
+.ai-card[data-cats*="writing"]::before{background:#fda4af;}
+.ai-card[data-cats*="data"]::before{background:#a5b4fc;}
+.ai-card:hover{
+  background:#fff;
+  box-shadow:0 22px 56px rgba(45,45,45,.11);
+  transform:translateY(-6px);
+}
+.ai-card:hover::before{transform:scale(1.14) translate(-10px,10px);}
+.ai-card>*{position:relative;z-index:1;}
+.ai-logo-wrap{
+  width:62px;
+  height:62px;
+  position:relative;
+  overflow:hidden;
+  border:0;
+  border-radius:20px;
+  box-shadow:0 10px 24px rgba(41,41,41,.14);
+}
+.tool-logo-img{
+  position:absolute;
+  inset:10px;
+  width:calc(100% - 20px);
+  height:calc(100% - 20px);
+  object-fit:contain;
+  opacity:0;
+  transition:opacity .2s ease;
+}
+.logo-fallback{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  color:inherit;
+  font-family:var(--font-en);
+  font-size:17px;
+  font-weight:700;
+  letter-spacing:-.03em;
+  transition:opacity .2s ease;
+}
 .ai-logo-wrap.has-logo{background:#fff!important;}
 .ai-logo-wrap.has-logo .tool-logo-img{opacity:1;}
 .ai-logo-wrap.has-logo .logo-fallback{opacity:0;}
-.ai-logo-wrap--sm{width:30px;height:30px;border-radius:99px;box-shadow:none;flex:0 0 auto;}
+.ai-logo-wrap--sm{
+  width:30px;
+  height:30px;
+  border-radius:9px;
+  box-shadow:none;
+  flex:0 0 auto;
+}
 .ai-logo-wrap--sm .tool-logo-img{inset:5px;width:calc(100% - 10px);height:calc(100% - 10px);}
 .ai-logo-wrap--sm .logo-fallback{font-size:11px;}
-.add-compare-btn{width:42px;height:42px;color:#666;background:rgba(255,255,255,.72);border-color:rgba(41,41,41,.16);backdrop-filter:blur(8px);}
+.add-compare-btn{
+  width:42px;
+  height:42px;
+  color:#666;
+  background:rgba(255,255,255,.72);
+  border-color:rgba(41,41,41,.16);
+  backdrop-filter:blur(8px);
+}
 .add-compare-btn:hover{color:#fff;background:var(--color-dark);border-color:var(--color-dark);}
 .add-compare-btn.added{background:var(--color-primary);border-color:var(--color-primary);}
-.ai-name{color:#333;font-size:31px;font-weight:500;}
-.ai-company{font-family:var(--font-en);font-size:16px;letter-spacing:.1em;text-transform:uppercase;}
-.ai-desc{max-width:100%;color:#5f5f5f;font-size:18px;line-height:1.75;}
-.tag{padding:6px 12px;font-size:15px;background:rgba(255,255,255,.65);border:1px solid rgba(41,41,41,.1);}
-.strength-label{width:88px;color:#626262;font-size:15px;font-weight:500;}
+.ai-name{color:#333;font-size:27px;font-weight:400;}
+.ai-company{font-family:var(--font-en);font-size:12px;letter-spacing:.1em;text-transform:uppercase;}
+.ai-desc{max-width:92%;color:#777;font-size:14px;line-height:1.7;}
+.tag{padding:5px 11px;color:#666;background:rgba(255,255,255,.65);border:1px solid rgba(41,41,41,.1);backdrop-filter:blur(6px);}
+.strength-label{font-family:var(--font-zh);font-size:10px;}
 .strength-bar-bg{height:5px;background:rgba(41,41,41,.08);}
-.price-badge{padding:6px 13px;font-size:16px;}
+.price-badge{padding:6px 13px;}
 .price-free{color:#0f766e;background:#ccfbf1;}
 .price-freemium{color:#9a3412;background:#ffedd5;}
 .price-paid{color:#be123c;background:#ffe4e6;}
 
-.compare-panel{right:20px;bottom:20px;left:20px;max-width:1100px;margin-inline:auto;background:rgba(41,41,41,.96);border:1px solid rgba(255,255,255,.13);border-radius:30px;box-shadow:0 18px 60px rgba(0,0,0,.24);backdrop-filter:blur(14px);}
+.no-results{padding:100px 0;}
+.no-results-title{color:#333;font-size:28px;font-weight:400;}
+
+/* Floating compare tray */
+.compare-panel{
+  right:20px;
+  bottom:20px;
+  left:20px;
+  max-width:1100px;
+  margin-inline:auto;
+  background:rgba(41,41,41,.96);
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:30px;
+  box-shadow:0 18px 60px rgba(0,0,0,.24);
+  backdrop-filter:blur(14px);
+}
+.compare-panel-inner{padding:17px 22px;}
+.compare-chip{background:rgba(255,255,255,.08);}
 .btn-compare-go{min-height:44px;padding-inline:24px;background:var(--color-primary);}
+.btn-compare-clear{min-height:44px;}
+
+/* Comparison modal */
+.modal-overlay{align-items:center;padding:32px;background:rgba(41,41,41,.56);}
+.modal-box{max-height:86vh;border-radius:34px;box-shadow:0 30px 90px rgba(0,0,0,.25);}
+.modal-header{padding:24px 30px;}
+.modal-title{color:#333;font-size:22px;font-weight:400;}
+.modal-close{background:#f6f6f6;}
+.compare-table th{font-family:var(--font-en);}
+.compare-table .row-head{font-family:var(--font-zh);}
+
+/* Footer */
+.site-footer{padding:80px 24px 34px;background:var(--color-dark);}
+.footer-grid{width:min(calc(100% - 48px),var(--container));}
+.footer-title{font-family:var(--font-en);font-size:clamp(44px,6vw,78px);font-weight:300;}
+.footer-label{color:var(--color-secondary);}
+.footer-bottom{width:min(calc(100% - 48px),var(--container));}
+
+@media(max-width:992px){
+  .site-header{padding-top:20px;}
+  .hero{min-height:640px;border-radius:0 0 360px 0;}
+  .search-bar-wrap{top:66px;}
+  .ai-grid{grid-template-columns:1fr;}
+  .ai-card{min-height:380px;}
+}
+
+@media(max-width:640px){
+  .container,.navbar,.hero-content,.search-bar-inner,.results-bar,.footer-grid,.footer-bottom{
+    width:min(calc(100% - 32px),var(--container));
+  }
+  .site-header{padding:16px 0 0;}
+  .navbar{min-height:50px;padding-left:18px;}
+  .logo{font-size:17px;}
+  .menu-button{width:38px;height:38px;border-color:#555;}
+  .nav-list{
+    inset:-16px 0 auto;
+    min-height:100vh;
+    color:#fff;
+    background:var(--color-dark);
+    border-radius:0;
+  }
+  .hero{min-height:590px;padding-top:125px;border-radius:0 0 180px 0;}
+  .hero-content::after{right:-260px;bottom:-390px;}
+  .hero-title{font-size:clamp(50px,16vw,76px);}
+  .hero-meta{grid-template-columns:repeat(2,1fr);gap:10px;margin-top:42px;}
+  .hero-stat{padding:14px 16px;border-radius:18px;}
+  .hero-stat:last-child{grid-column:1/-1;}
+  .features{padding:72px 0;}
+  .features__grid{grid-template-columns:1fr;gap:48px;}
+  .search-bar-wrap{top:64px;padding:10px 0;}
+  .search-bar-inner{padding:12px;border-radius:24px;}
+  .ai-grid-section{padding-top:34px;}
+  .ai-card{min-height:auto;padding:26px;border-radius:26px;}
+  .ai-name{font-size:23px;}
+  .compare-panel{right:10px;bottom:10px;left:10px;border-radius:24px;}
+  .modal-overlay{padding:12px;}
+  .modal-box{border-radius:24px;}
+}
+
+/* =========================================================
+   READABILITY + RESPONSIVE REFINEMENTS
+   Larger type, clearer contrast and touch-friendly controls
+========================================================= */
+html{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+body{
+  font-size:20px;
+  line-height:1.65;
+}
+p,li,td,th,.ai-desc,.feature__copy{
+  overflow-wrap:anywhere;
+}
+.nav-link{font-size:18px;font-weight:600;}
+.compare-btn{font-size:17px;}
+.compare-count{font-size:14px;}
+.hero-eyebrow{font-size:17px;}
+.hero-stat-label{font-size:16px;line-height:1.45;}
+.feature__title{font-size:24px;font-weight:500;}
+.feature__copy{max-width:270px;color:#666;font-size:18px;line-height:1.7;}
+.search-input{
+  min-height:48px;
+  font-size:18px;
+}
+.filter-btn,.filter-select,.reset-btn{
+  min-height:44px;
+  font-size:16px;
+  font-weight:600;
+}
+.filter-btn{padding-inline:18px;}
+.reset-btn{padding-inline:12px;}
+.results-count{font-size:17px;}
+.results-count strong{font-size:22px;}
+.results-hint{font-size:17px;}
+.ai-name{font-size:31px;font-weight:500;}
+.ai-company{font-size:16px;}
+.ai-desc{
+  max-width:100%;
+  color:#5f5f5f;
+  font-size:18px;
+  line-height:1.75;
+}
+.tag{
+  padding:6px 12px;
+  font-size:15px;
+}
+.strength-row{gap:10px;margin-bottom:8px;}
+.strength-label{
+  width:88px;
+  color:#626262;
+  font-size:15px;
+  font-weight:500;
+}
+.price-badge,.price-amount{font-size:16px;}
+.legend-title,.legend-dot{font-size:16px;}
+.compare-chip{font-size:17px;}
+.btn-compare-go,.btn-compare-clear{font-size:17px;}
+.modal-title{font-size:26px;font-weight:500;}
+.compare-table th,.compare-table .row-head{font-size:15px;}
+.compare-table td{font-size:17px;line-height:1.6;}
+.score-num{font-size:15px;}
+.footer-label{font-size:16px;}
+.footer-links{font-size:19px;line-height:1.6;}
+.footer-bottom{font-size:16px;line-height:1.6;}
+.no-results{font-size:18px;}
+.no-results-copy{font-size:18px;}
 
 @media(max-width:992px){
   .hero-title{font-size:clamp(58px,10vw,88px);}
-  .ai-grid{grid-template-columns:1fr;}
+  .features__grid{gap:34px;}
+  .ai-card{min-height:auto;}
+}
+
+@media(max-width:768px){
+  .hero{
+    min-height:620px;
+    padding-bottom:76px;
+  }
+  .hero-meta{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    width:100%;
+  }
+  .hero-stat{padding:16px;}
+  .hero-stat-num{font-size:30px;}
+  .search-bar-inner{gap:14px;}
+  .filter-stack{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    width:100%;
+  }
+  .filter-group{
+    grid-column:1/-1;
+    flex-wrap:nowrap;
+    width:100%;
+    padding:2px 2px 8px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .filter-group::-webkit-scrollbar{display:none;}
+  .filter-select{width:100%;min-width:0;}
+  .reset-btn{
+    grid-column:1/-1;
+    justify-self:start;
+  }
+  .results-bar{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:4px;
+  }
+  .compare-panel-inner{align-items:stretch;}
+  .compare-items{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .compare-actions{width:100%;}
+  .compare-actions button{flex:1;min-height:48px;}
+  .modal-body{padding:24px;}
+  .compare-table{min-width:720px;}
+}
+
+@media(max-width:640px){
+  body{font-size:19px;}
+  .navbar{padding-right:6px;}
+  .logo{font-size:20px;}
+  .compare-btn{display:none!important;}
+  .menu-button{width:44px;height:44px;}
+  .nav-link{font-size:clamp(34px,9vw,50px);}
+  .hero{
+    min-height:610px;
+    padding-top:118px;
+    padding-bottom:66px;
+  }
+  .hero-title{
+    font-size:clamp(50px,15vw,72px);
+    line-height:1;
+  }
+  .hero-eyebrow{font-size:16px;letter-spacing:.15em;}
+  .hero-meta{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    margin-top:38px;
+  }
+  .hero-stat:last-child{grid-column:1/-1;}
+  .hero-stat-num{font-size:30px;}
+  .hero-stat-label{font-size:15px;}
+  .features__grid{gap:44px;}
+  .feature__title{font-size:23px;}
+  .feature__copy{font-size:18px;}
+  .search-bar-wrap{top:62px;}
+  .search-bar-inner{padding:12px;}
+  .search-input{font-size:18px;}
+  .filter-btn,.filter-select,.reset-btn{font-size:16px;}
+  .ai-grid-section{padding-bottom:80px;}
+  .ai-card{padding:26px 22px;}
+  .ai-name{font-size:27px;}
+  .ai-company{font-size:15px;}
+  .ai-desc{font-size:18px;}
+  .strength-label{width:82px;font-size:14px;}
+  .price-badge,.price-amount{font-size:15px;}
+  .modal-header{padding:20px;}
+  .modal-title{font-size:23px;}
+  .modal-body{padding:18px;}
+  .footer-links{font-size:18px;}
+  .footer-bottom{font-size:15px;}
+}
+
+@media(max-width:390px){
+  .container,.navbar,.hero-content,.search-bar-inner,.results-bar,.footer-grid,.footer-bottom{
+    width:min(calc(100% - 24px),var(--container));
+  }
+  .hero-title{font-size:clamp(46px,14vw,60px);}
+  .hero-stat{padding:14px 12px;}
+  .filter-stack{grid-template-columns:1fr;}
+  .filter-group,.reset-btn{grid-column:1;}
+  .ai-card{padding-inline:18px;}
+  .ai-logo-wrap{width:56px;height:56px;}
 }
 </style>
 </head>
@@ -310,6 +893,9 @@ body{background:var(--color-background);color:var(--color-text);font-family:var(
     <div style="display:flex;align-items:center;gap:14px;">
       <button type="button" class="compare-btn" id="compare-open-btn" style="display:none;" onclick="openCompareModal()">
         比較清單 <span class="compare-count" id="compare-count-badge">0</span>
+      </button>
+      <button type="button" class="menu-button" id="menu-button" aria-label="開啟選單" aria-expanded="false" aria-controls="nav-list">
+        <span></span>
       </button>
     </div>
   </nav>
@@ -342,13 +928,36 @@ body{background:var(--color-background);color:var(--color-text);font-family:var(
   </div>
 </section>
 
+<!-- FEATURES -->
+<section class="features" id="categories" aria-label="網站特色">
+  <div class="container">
+    <div class="features__grid">
+      <article class="feature">
+        <div class="feature__icon feature__icon--triangle" aria-hidden="true"></div>
+        <h2 class="feature__title">快速搜尋</h2>
+        <p class="feature__copy">輸入需求、功能或公司名稱，立即縮小工具範圍。</p>
+      </article>
+      <article class="feature">
+        <div class="feature__icon feature__icon--square" aria-hidden="true"></div>
+        <h2 class="feature__title">交叉篩選</h2>
+        <p class="feature__copy">同時依用途、費用與排序條件找到適合選項。</p>
+      </article>
+      <article class="feature">
+        <div class="feature__icon feature__icon--circle" aria-hidden="true"></div>
+        <h2 class="feature__title">並排比較</h2>
+        <p class="feature__copy">最多選擇三款工具，直接比較價格與六項強度。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- SEARCH + FILTER -->
 <div class="search-bar-wrap" id="tools">
   <div class="search-bar-inner">
     <div class="search-input-wrap">
       <svg class="search-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <label class="sr-only" for="search-input">搜尋 AI 工具</label>
-      <input class="search-input" type="search" id="search-input" placeholder="搜尋名稱、公司或功能，支援模糊搜尋 (如: mj, openai, 配音)…" autocomplete="off">
+      <input class="search-input" type="search" id="search-input" placeholder="輸入需求或問題，例如：我想把照片做成影片…" autocomplete="off">
       <button type="button" class="search-clear" id="search-clear" aria-label="清除搜尋">×</button>
     </div>
     <div class="filter-stack">
@@ -370,7 +979,7 @@ body{background:var(--color-background);color:var(--color-text);font-family:var(
       </select>
       <label class="sr-only" for="sort-select">排序方式</label>
       <select class="filter-select" id="sort-select">
-        <option value="recommended">推薦/相關度排序</option>
+        <option value="recommended">推薦排序</option>
         <option value="name">名稱 A–Z</option>
         <option value="price">免費優先</option>
       </select>
@@ -391,12 +1000,12 @@ body{background:var(--color-background);color:var(--color-text);font-family:var(
 <section class="ai-grid-section">
   <div class="container">
     <div class="ai-grid" id="ai-grid">
-      <!-- Cards inserted dynamically by JS -->
+      <!-- Cards inserted by JS -->
     </div>
     <div class="no-results" id="no-results">
       <p class="no-results-title">找不到符合的工具</p>
-      <p class="no-results-copy">嘗試不同的關鍵字、錯字簡寫，或切換分類</p>
-      <button type="button" class="filter-btn" id="no-results-reset" style="margin-top:16px;">清除所有條件</button>
+      <p class="no-results-copy">嘗試不同的關鍵字或分類</p>
+      <button type="button" class="filter-btn" id="no-results-reset">清除所有條件</button>
     </div>
   </div>
 </section>
@@ -431,82 +1040,292 @@ body{background:var(--color-background);color:var(--color-text);font-family:var(
     <div>
       <p class="footer-title">Find. Compare. Create.</p>
     </div>
+    <div>
+      <p class="footer-label">分類</p>
+      <ul class="footer-links">
+        <li><a href="#tools" data-footer-filter="video">影片製作工具</a></li>
+        <li><a href="#tools" data-footer-filter="image">圖片生成工具</a></li>
+        <li><a href="#tools" data-footer-filter="audio">音檔生成工具</a></li>
+        <li><a href="#tools" data-footer-filter="animation">動畫製作工具</a></li>
+        <li><a href="#tools" data-footer-filter="writing">文案寫作工具</a></li>
+        <li><a href="#tools" data-footer-filter="data">資料分析工具</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-label">定價篩選</p>
+      <ul class="footer-links">
+        <li><a href="#tools" data-footer-price="free">完全免費</a></li>
+        <li><a href="#tools" data-footer-price="freemium">免費＋付費</a></li>
+        <li><a href="#tools" data-footer-price="paid">付費方案</a></li>
+      </ul>
+    </div>
   </div>
   <div class="footer-bottom">
     <span>© 2026 AI·RADAR — 資料僅供參考，定價與授權以官方為準</span>
+    <span>Interface updated 2026</span>
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 <script>
 const AI_DATA = [
   // --- VIDEO ---
-  {id:1,name:"Sora",company:"OpenAI",desc:"文字/圖片生成高品質影片，最長60秒，物理世界模擬能力強。",cats:["video","animation"],price:"paid",priceLabel:"$20+/月",strengths:{video:95,image:60,audio:0,animation:85,writing:30,data:0},color:"#0a0a0a",textColor:"#fff"},
-  {id:2,name:"Runway Gen-4",company:"Runway",desc:"業界標竿影片生成工具，支援 Motion Brush、多攝角控制。",cats:["video","animation","image"],price:"freemium",priceLabel:"$15+/月",strengths:{video:93,image:75,audio:0,animation:88,writing:0,data:0},color:"#1a1a2e",textColor:"#fff"},
-  {id:3,name:"Pika",company:"Pika Labs",desc:"快速從圖片或文字生成短影片，支援 Lip Sync 與 SFX 音效。",cats:["video","animation"],price:"freemium",priceLabel:"$8+/月",strengths:{video:82,image:50,audio:40,animation:78,writing:0,data:0},color:"#8b5cf6",textColor:"#fff"},
-  {id:4,name:"Kling AI",company:"快手",desc:"中文優化的影片生成，5秒/10秒高品質輸出，運動連貫性佳。",cats:["video","animation"],price:"freemium",priceLabel:"免費/¥66+",strengths:{video:88,image:55,audio:0,animation:82,writing:0,data:0},color:"#ff6b35",textColor:"#fff"},
-  {id:5,name:"HeyGen",company:"HeyGen",desc:"AI 數位人影片製作，支援 130+ 語言口播與虛擬主播。",cats:["video"],price:"freemium",priceLabel:"$29+/月",strengths:{video:80,image:40,audio:60,animation:55,writing:35,data:0},color:"#06b6d4",textColor:"#fff"},
-  {id:6,name:"Luma Dream Machine",company:"Luma AI",desc:"高保真影片生成，Ray2 模型支援相機運動控制與長影片。",cats:["video","animation"],price:"freemium",priceLabel:"$29.99+/月",strengths:{video:87,image:65,audio:0,animation:80,writing:0,data:0},color:"#10b981",textColor:"#fff"},
-  {id:7,name:"Vidu",company:"生數科技",desc:"中國研發，支援參考圖生成，風格一致性高，動作流暢。",cats:["video","animation"],price:"freemium",priceLabel:"免費試用",strengths:{video:84,image:60,audio:0,animation:79,writing:0,data:0},color:"#6366f1",textColor:"#fff"},
-  {id:8,name:"Descript",company:"Descript",desc:"影片/Podcast 剪輯 + AI 文字剪輯，Overdub 聲音複製功能。",cats:["video","audio","writing"],price:"freemium",priceLabel:"$24+/月",strengths:{video:72,image:0,audio:78,animation:0,writing:70,data:0},color:"#f59e0b",textColor:"#fff"},
+  {id:1,name:"Sora",company:"OpenAI",desc:"文字/圖片生成高品質影片，最長60秒，物理世界模擬能力強。",cats:["video","animation"],price:"paid",priceLabel:"$20+/月",strengths:{video:95,image:60,audio:0,animation:85,writing:30,data:0},color:"#0a0a0a",textColor:"#fff",emoji:"🎬"},
+  {id:2,name:"Runway Gen-4",company:"Runway",desc:"業界標竿影片生成工具，支援 Motion Brush、多攝角控制。",cats:["video","animation","image"],price:"freemium",priceLabel:"$15+/月",strengths:{video:93,image:75,audio:0,animation:88,writing:0,data:0},color:"#1a1a2e",textColor:"#fff",emoji:"🚀"},
+  {id:3,name:"Pika",company:"Pika Labs",desc:"快速從圖片或文字生成短影片，支援 Lip Sync 與 SFX 音效。",cats:["video","animation"],price:"freemium",priceLabel:"$8+/月",strengths:{video:82,image:50,audio:40,animation:78,writing:0,data:0},color:"#8b5cf6",textColor:"#fff",emoji:"⚡"},
+  {id:4,name:"Kling AI",company:"快手",desc:"中文優化的影片生成，5秒/10秒高品質輸出，運動連貫性佳。",cats:["video","animation"],price:"freemium",priceLabel:"免費/¥66+",strengths:{video:88,image:55,audio:0,animation:82,writing:0,data:0},color:"#ff6b35",textColor:"#fff",emoji:"🎥"},
+  {id:5,name:"HeyGen",company:"HeyGen",desc:"AI 數位人影片製作，支援 130+ 語言口播與虛擬主播。",cats:["video"],price:"freemium",priceLabel:"$29+/月",strengths:{video:80,image:40,audio:60,animation:55,writing:35,data:0},color:"#06b6d4",textColor:"#fff",emoji:"👤"},
+  {id:6,name:"Luma Dream Machine",company:"Luma AI",desc:"高保真影片生成，Ray2 模型支援相機運動控制與長影片。",cats:["video","animation"],price:"freemium",priceLabel:"$29.99+/月",strengths:{video:87,image:65,audio:0,animation:80,writing:0,data:0},color:"#10b981",textColor:"#fff",emoji:"🌙"},
+  {id:7,name:"Vidu",company:"生數科技",desc:"中國研發，支援參考圖生成，風格一致性高，動作流暢。",cats:["video","animation"],price:"freemium",priceLabel:"免費試用",strengths:{video:84,image:60,audio:0,animation:79,writing:0,data:0},color:"#6366f1",textColor:"#fff",emoji:"🎞"},
+  {id:8,name:"Descript",company:"Descript",desc:"影片/Podcast 剪輯 + AI 文字剪輯，Overdub 聲音複製功能。",cats:["video","audio","writing"],price:"freemium",priceLabel:"$24+/月",strengths:{video:72,image:0,audio:78,animation:0,writing:70,data:0},color:"#f59e0b",textColor:"#fff",emoji:"✂️"},
 
   // --- IMAGE ---
-  {id:9,name:"Midjourney",company:"Midjourney",desc:"頂級藝術風格圖像生成，v7 寫實度大幅提升，Discord 介面。",cats:["image","animation"],price:"paid",priceLabel:"$10+/月",strengths:{video:0,image:97,audio:0,animation:45,writing:20,data:0},color:"#1d4ed8",textColor:"#fff"},
-  {id:10,name:"DALL·E 3",company:"OpenAI",desc:"整合 ChatGPT 的圖像生成，文字理解準確，提示詞友善。",cats:["image"],price:"freemium",priceLabel:"GPT+ $20/月",strengths:{video:0,image:88,audio:0,animation:30,writing:50,data:0},color:"#059669",textColor:"#fff"},
-  {id:11,name:"Stable Diffusion 3",company:"Stability AI",desc:"開源免費本地部署，高度可客製化，LoRA 模型生態豐富。",cats:["image","animation"],price:"free",priceLabel:"開源免費",strengths:{video:20,image:90,audio:0,animation:55,writing:0,data:0},color:"#374151",textColor:"#fff"},
-  {id:12,name:"Adobe Firefly",company:"Adobe",desc:"商業安全的 AI 圖像生成，深度整合 Photoshop/Illustrator。",cats:["image","animation"],price:"freemium",priceLabel:"含 CC 訂閱",strengths:{video:0,image:85,audio:0,animation:65,writing:0,data:0},color:"#e34850",textColor:"#fff"},
-  {id:13,name:"Ideogram 2",company:"Ideogram",desc:"文字嵌入圖像能力最強，Logo 設計、Typography 表現優秀。",cats:["image"],price:"freemium",priceLabel:"$7+/月",strengths:{video:0,image:88,audio:0,animation:20,writing:55,data:0},color:"#7c3aed",textColor:"#fff"},
-  {id:14,name:"Leonardo AI",company:"Leonardo",desc:"多模型選擇的創意平台，遊戲資產與角色一致性強。",cats:["image","animation"],price:"freemium",priceLabel:"$12+/月",strengths:{video:20,image:87,audio:0,animation:60,writing:0,data:0},color:"#dc2626",textColor:"#fff"},
-  {id:15,name:"Flux Pro",company:"Black Forest Labs",desc:"速度最快的頂級圖像模型之一，風格多元，API 易整合。",cats:["image"],price:"paid",priceLabel:"按量計費",strengths:{video:0,image:92,audio:0,animation:35,writing:0,data:0},color:"#1e3a5f",textColor:"#fff"},
-  {id:16,name:"Canva AI",company:"Canva",desc:"設計師友善的 AI 套件，Magic Media 整合圖像/影片生成。",cats:["image","video","writing"],price:"freemium",priceLabel:"$12.99+/月",strengths:{video:55,image:70,audio:0,animation:50,writing:72,data:35},color:"#00c4cc",textColor:"#fff"},
+  {id:9,name:"Midjourney",company:"Midjourney",desc:"頂級藝術風格圖像生成，v7 寫實度大幅提升，Discord 介面。",cats:["image","animation"],price:"paid",priceLabel:"$10+/月",strengths:{video:0,image:97,audio:0,animation:45,writing:20,data:0},color:"#1d4ed8",textColor:"#fff",emoji:"🎨"},
+  {id:10,name:"DALL·E 3",company:"OpenAI",desc:"整合 ChatGPT 的圖像生成，文字理解準確，提示詞友善。",cats:["image"],price:"freemium",priceLabel:"GPT+ $20/月",strengths:{video:0,image:88,audio:0,animation:30,writing:50,data:0},color:"#059669",textColor:"#fff",emoji:"🖼"},
+  {id:11,name:"Stable Diffusion 3",company:"Stability AI",desc:"開源免費本地部署，高度可客製化，LoRA 模型生態豐富。",cats:["image","animation"],price:"free",priceLabel:"開源免費",strengths:{video:20,image:90,audio:0,animation:55,writing:0,data:0},color:"#374151",textColor:"#fff",emoji:"⚙️"},
+  {id:12,name:"Adobe Firefly",company:"Adobe",desc:"商業安全的 AI 圖像生成，深度整合 Photoshop/Illustrator。",cats:["image","animation"],price:"freemium",priceLabel:"含 CC 訂閱",strengths:{video:0,image:85,audio:0,animation:65,writing:0,data:0},color:"#e34850",textColor:"#fff",emoji:"🔥"},
+  {id:13,name:"Ideogram 2",company:"Ideogram",desc:"文字嵌入圖像能力最強，Logo 設計、Typography 表現優秀。",cats:["image"],price:"freemium",priceLabel:"$7+/月",strengths:{video:0,image:88,audio:0,animation:20,writing:55,data:0},color:"#7c3aed",textColor:"#fff",emoji:"✒️"},
+  {id:14,name:"Leonardo AI",company:"Leonardo",desc:"多模型選擇的創意平台，遊戲資產與角色一致性強。",cats:["image","animation"],price:"freemium",priceLabel:"$12+/月",strengths:{video:20,image:87,audio:0,animation:60,writing:0,data:0},color:"#dc2626",textColor:"#fff",emoji:"🦁"},
+  {id:15,name:"Flux Pro",company:"Black Forest Labs",desc:"速度最快的頂級圖像模型之一，風格多元，API 易整合。",cats:["image"],price:"paid",priceLabel:"按量計費",strengths:{video:0,image:92,audio:0,animation:35,writing:0,data:0},color:"#1e3a5f",textColor:"#fff",emoji:"🌊"},
+  {id:16,name:"Canva AI",company:"Canva",desc:"設計師友善的 AI 套件，Magic Media 整合圖像/影片生成。",cats:["image","video","writing"],price:"freemium",priceLabel:"$12.99+/月",strengths:{video:55,image:70,audio:0,animation:50,writing:72,data:35},color:"#00c4cc",textColor:"#fff",emoji:"🎭"},
 
   // --- AUDIO ---
-  {id:17,name:"Suno AI",company:"Suno",desc:"全曲生成王者，歌詞+旋律+人聲一鍵產出，風格覆蓋廣。",cats:["audio"],price:"freemium",priceLabel:"$8+/月",strengths:{video:0,image:0,audio:95,animation:0,writing:40,data:0},color:"#7c3aed",textColor:"#fff"},
-  {id:18,name:"Udio",company:"Udio",desc:"高品質音樂生成，細節豐富，支援歌詞自訂與續曲。",cats:["audio"],price:"freemium",priceLabel:"$10+/月",strengths:{video:0,image:0,audio:92,animation:0,writing:38,data:0},color:"#db2777",textColor:"#fff"},
-  {id:19,name:"ElevenLabs",company:"ElevenLabs",desc:"頂級 AI 配音克隆，Dubbing Studio 支援多語言影片配音。",cats:["audio","video"],price:"freemium",priceLabel:"$5+/月",strengths:{video:45,image:0,audio:97,animation:0,writing:30,data:0},color:"#0f172a",textColor:"#fff"},
-  {id:20,name:"Murf AI",company:"Murf",desc:"專業 AI 旁白配音，120+ 語音，簡報/廣告影片整合方便。",cats:["audio","video"],price:"freemium",priceLabel:"$19+/月",strengths:{video:50,image:0,audio:85,animation:0,writing:40,data:0},color:"#0284c7",textColor:"#fff"},
-  {id:21,name:"Ditto Music AI",company:"Ditto",desc:"音樂母帶處理與 AI 混音，適合獨立音樂人發行流程。",cats:["audio"],price:"paid",priceLabel:"$19+/月",strengths:{video:0,image:0,audio:80,animation:0,writing:20,data:30},color:"#16a34a",textColor:"#fff"},
-  {id:22,name:"Adobe Podcast",company:"Adobe",desc:"AI 降噪、語音增強、文字逐字稿，Podcast 製作神器。",cats:["audio","writing"],price:"freemium",priceLabel:"Beta 免費",strengths:{video:30,image:0,audio:82,animation:0,writing:65,data:0},color:"#9c27b0",textColor:"#fff"},
-  {id:23,name:"Kling AI Audio",company:"快手",desc:"與 Kling 影片深度整合的 AI 音效/配樂生成功能。",cats:["audio","video"],price:"freemium",priceLabel:"含 Kling 方案",strengths:{video:70,image:0,audio:78,animation:65,writing:0,data:0},color:"#ea580c",textColor:"#fff"},
-  {id:24,name:"Boomy",company:"Boomy",desc:"30 秒生成歌曲，可直接上架串流平台賺取版稅分潤。",cats:["audio"],price:"freemium",priceLabel:"$2.99+/月",strengths:{video:0,image:0,audio:72,animation:0,writing:25,data:0},color:"#0d9488",textColor:"#fff"},
+  {id:17,name:"Suno AI",company:"Suno",desc:"全曲生成王者，歌詞+旋律+人聲一鍵產出，風格覆蓋廣。",cats:["audio"],price:"freemium",priceLabel:"$8+/月",strengths:{video:0,image:0,audio:95,animation:0,writing:40,data:0},color:"#7c3aed",textColor:"#fff",emoji:"🎸"},
+  {id:18,name:"Udio",company:"Udio",desc:"高品質音樂生成，細節豐富，支援歌詞自訂與續曲。",cats:["audio"],price:"freemium",priceLabel:"$10+/月",strengths:{video:0,image:0,audio:92,animation:0,writing:38,data:0},color:"#db2777",textColor:"#fff",emoji:"🎹"},
+  {id:19,name:"ElevenLabs",company:"ElevenLabs",desc:"頂級 AI 配音克隆，Dubbing Studio 支援多語言影片配音。",cats:["audio","video"],price:"freemium",priceLabel:"$5+/月",strengths:{video:45,image:0,audio:97,animation:0,writing:30,data:0},color:"#0f172a",textColor:"#fff",emoji:"🎙"},
+  {id:20,name:"Murf AI",company:"Murf",desc:"專業 AI 旁白配音，120+ 語音，簡報/廣告影片整合方便。",cats:["audio","video"],price:"freemium",priceLabel:"$19+/月",strengths:{video:50,image:0,audio:85,animation:0,writing:40,data:0},color:"#0284c7",textColor:"#fff",emoji:"📢"},
+  {id:21,name:"Ditto Music AI",company:"Ditto",desc:"音樂母帶處理與 AI 混音，適合獨立音樂人發行流程。",cats:["audio"],price:"paid",priceLabel:"$19+/月",strengths:{video:0,image:0,audio:80,animation:0,writing:20,data:30},color:"#16a34a",textColor:"#fff",emoji:"🎚"},
+  {id:22,name:"Adobe Podcast",company:"Adobe",desc:"AI 降噪、語音增強、文字逐字稿，Podcast 製作神器。",cats:["audio","writing"],price:"freemium",priceLabel:"Beta 免費",strengths:{video:30,image:0,audio:82,animation:0,writing:65,data:0},color:"#9c27b0",textColor:"#fff",emoji:"🎧"},
+  {id:23,name:"Kling AI Audio",company:"快手",desc:"與 Kling 影片深度整合的 AI 音效/配樂生成功能。",cats:["audio","video"],price:"freemium",priceLabel:"含 Kling 方案",strengths:{video:70,image:0,audio:78,animation:65,writing:0,data:0},color:"#ea580c",textColor:"#fff",emoji:"🔊"},
+  {id:24,name:"Boomy",company:"Boomy",desc:"30 秒生成歌曲，可直接上架串流平台賺取版稅分潤。",cats:["audio"],price:"freemium",priceLabel:"$2.99+/月",strengths:{video:0,image:0,audio:72,animation:0,writing:25,data:0},color:"#0d9488",textColor:"#fff",emoji:"💿"},
 
   // --- ANIMATION ---
-  {id:25,name:"Viggle AI",company:"Viggle",desc:"角色動作遷移，上傳圖片+動作影片即可生成動畫角色。",cats:["animation","video"],price:"freemium",priceLabel:"免費試用",strengths:{video:75,image:40,audio:0,animation:88,writing:0,data:0},color:"#4f46e5",textColor:"#fff"},
-  {id:26,name:"Haiper",company:"Haiper",desc:"高速影片/動畫生成，支援圖生影片與動態效果。",cats:["animation","video"],price:"freemium",priceLabel:"$9.9+/月",strengths:{video:82,image:50,audio:0,animation:83,writing:0,data:0},color:"#be185d",textColor:"#fff"},
-  {id:27,name:"Animate Anyone 2",company:"阿里巴巴",desc:"人物動畫生成，全身動作一致性業界領先。",cats:["animation","video"],price:"free",priceLabel:"開源",strengths:{video:70,image:50,audio:0,animation:91,writing:0,data:0},color:"#f97316",textColor:"#fff"},
-  {id:28,name:"Spline AI",company:"Spline",desc:"3D 場景設計 + AI 生成材質，Web 嵌入超簡單。",cats:["animation","image"],price:"freemium",priceLabel:"$7+/月",strengths:{video:40,image:65,audio:0,animation:80,writing:0,data:0},color:"#0ea5e9",textColor:"#fff"},
-  {id:29,name:"Genmo",company:"Genmo",desc:"3D 動畫與影片生成，支援物件操控的創意平台。",cats:["animation","video","image"],price:"freemium",priceLabel:"$10+/月",strengths:{video:75,image:60,audio:0,animation:80,writing:0,data:0},color:"#7c2d12",textColor:"#fff"},
-  {id:30,name:"Kaiber",company:"Kaiber",desc:"音樂驅動的影片與動畫，Audioreactivity 視覺效果獨特。",cats:["animation","video","audio"],price:"freemium",priceLabel:"$5+/月",strengths:{video:72,image:55,audio:50,animation:82,writing:0,data:0},color:"#1e1b4b",textColor:"#fff"},
+  {id:25,name:"Viggle AI",company:"Viggle",desc:"角色動作遷移，上傳圖片+動作影片即可生成動畫角色。",cats:["animation","video"],price:"freemium",priceLabel:"免費試用",strengths:{video:75,image:40,audio:0,animation:88,writing:0,data:0},color:"#4f46e5",textColor:"#fff",emoji:"🕺"},
+  {id:26,name:"Haiper",company:"Haiper",desc:"高速影片/動畫生成，支援圖生影片與動態效果。",cats:["animation","video"],price:"freemium",priceLabel:"$9.9+/月",strengths:{video:82,image:50,audio:0,animation:83,writing:0,data:0},color:"#be185d",textColor:"#fff",emoji:"💫"},
+  {id:27,name:"Animate Anyone 2",company:"阿里巴巴",desc:"人物動畫生成，全身動作一致性業界領先。",cats:["animation","video"],price:"free",priceLabel:"開源",strengths:{video:70,image:50,audio:0,animation:91,writing:0,data:0},color:"#f97316",textColor:"#fff",emoji:"🎪"},
+  {id:28,name:"Spline AI",company:"Spline",desc:"3D 場景設計 + AI 生成材質，Web 嵌入超簡單。",cats:["animation","image"],price:"freemium",priceLabel:"$7+/月",strengths:{video:40,image:65,audio:0,animation:80,writing:0,data:0},color:"#0ea5e9",textColor:"#fff",emoji:"🌐"},
+  {id:29,name:"Genmo",company:"Genmo",desc:"3D 動畫與影片生成，支援物件操控的創意平台。",cats:["animation","video","image"],price:"freemium",priceLabel:"$10+/月",strengths:{video:75,image:60,audio:0,animation:80,writing:0,data:0},color:"#7c2d12",textColor:"#fff",emoji:"🎠"},
+  {id:30,name:"Kaiber",company:"Kaiber",desc:"音樂驅動的影片與動畫，Audioreactivity 視覺效果獨特。",cats:["animation","video","audio"],price:"freemium",priceLabel:"$5+/月",strengths:{video:72,image:55,audio:50,animation:82,writing:0,data:0},color:"#1e1b4b",textColor:"#fff",emoji:"🌀"},
 
   // --- WRITING ---
-  {id:31,name:"ChatGPT",company:"OpenAI",desc:"最廣泛使用的 AI 助理，GPT-4o 多模態，文案/程式/分析全能。",cats:["writing","data","image"],price:"freemium",priceLabel:"$20+/月 Pro",strengths:{video:20,image:60,audio:20,animation:0,writing:92,data:85},color:"#10a37f",textColor:"#fff"},
-  {id:32,name:"Claude",company:"Anthropic",desc:"長文理解與寫作品質業界頂尖，倫理對齊設計，200K context。",cats:["writing","data","code"],price:"freemium",priceLabel:"$20+/月 Pro",strengths:{video:0,image:30,audio:0,animation:0,writing:95,data:88},color:"#c96442",textColor:"#fff"},
-  {id:33,name:"Gemini Ultra",company:"Google",desc:"深度整合 Google 服務，原生多模態，即時資訊搜尋能力強。",cats:["writing","data","image"],price:"freemium",priceLabel:"$19.99+/月",strengths:{video:30,image:65,audio:30,animation:0,writing:88,data:90},color:"#4285f4",textColor:"#fff"},
-  {id:34,name:"Notion AI",company:"Notion",desc:"筆記/文件內建 AI，整合工作流，摘要/翻譯/草稿一鍵完成。",cats:["writing","data"],price:"paid",priceLabel:"$10+/月 add-on",strengths:{video:0,image:0,audio:0,animation:0,writing:82,data:72},color:"#37352f",textColor:"#fff"},
-  {id:35,name:"Jasper AI",company:"Jasper",desc:"行銷文案專門，Brand Voice 一致性，廣告/SEO 文案優化。",cats:["writing"],price:"paid",priceLabel:"$39+/月",strengths:{video:0,image:40,audio:0,animation:0,writing:88,data:45},color:"#7c3aed",textColor:"#fff"},
-  {id:36,name:"Copy.ai",company:"Copy.ai",desc:"行銷自動化工作流，跨渠道文案批量生成效率極高。",cats:["writing"],price:"freemium",priceLabel:"$36+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:85,data:50},color:"#0284c7",textColor:"#fff"},
-  {id:37,name:"Rytr",company:"Rytr",desc:"40+ 語言支援，CP 值高的輕量文案工具，適合個人使用。",cats:["writing"],price:"freemium",priceLabel:"$9+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:78,data:30},color:"#6d28d9",textColor:"#fff"},
-  {id:38,name:"Writesonic",company:"Writesonic",desc:"結合 AI 搜尋的文案生成，Chatsonic 整合網路即時資訊。",cats:["writing","data"],price:"freemium",priceLabel:"$16+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:83,data:68},color:"#059669",textColor:"#fff"},
+  {id:31,name:"ChatGPT",company:"OpenAI",desc:"最廣泛使用的 AI 助理，GPT-4o 多模態，文案/程式/分析全能。",cats:["writing","data","image"],price:"freemium",priceLabel:"$20+/月 Pro",strengths:{video:20,image:60,audio:20,animation:0,writing:92,data:85},color:"#10a37f",textColor:"#fff",emoji:"💬"},
+  {id:32,name:"Claude",company:"Anthropic",desc:"長文理解與寫作品質業界頂尖，倫理對齊設計，200K context。",cats:["writing","data","code"],price:"freemium",priceLabel:"$20+/月 Pro",strengths:{video:0,image:30,audio:0,animation:0,writing:95,data:88},color:"#c96442",textColor:"#fff",emoji:"🧡"},
+  {id:33,name:"Gemini Ultra",company:"Google",desc:"深度整合 Google 服務，原生多模態，即時資訊搜尋能力強。",cats:["writing","data","image"],price:"freemium",priceLabel:"$19.99+/月",strengths:{video:30,image:65,audio:30,animation:0,writing:88,data:90},color:"#4285f4",textColor:"#fff",emoji:"♊"},
+  {id:34,name:"Notion AI",company:"Notion",desc:"筆記/文件內建 AI，整合工作流，摘要/翻譯/草稿一鍵完成。",cats:["writing","data"],price:"paid",priceLabel:"$10+/月 add-on",strengths:{video:0,image:0,audio:0,animation:0,writing:82,data:72},color:"#37352f",textColor:"#fff",emoji:"📓"},
+  {id:35,name:"Jasper AI",company:"Jasper",desc:"行銷文案專門，Brand Voice 一致性，廣告/SEO 文案優化。",cats:["writing"],price:"paid",priceLabel:"$39+/月",strengths:{video:0,image:40,audio:0,animation:0,writing:88,data:45},color:"#7c3aed",textColor:"#fff",emoji:"📝"},
+  {id:36,name:"Copy.ai",company:"Copy.ai",desc:"行銷自動化工作流，跨渠道文案批量生成效率極高。",cats:["writing"],price:"freemium",priceLabel:"$36+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:85,data:50},color:"#0284c7",textColor:"#fff",emoji:"✍️"},
+  {id:37,name:"Rytr",company:"Rytr",desc:"40+ 語言支援，CP 值高的輕量文案工具，適合個人使用。",cats:["writing"],price:"freemium",priceLabel:"$9+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:78,data:30},color:"#6d28d9",textColor:"#fff",emoji:"🖊"},
+  {id:38,name:"Writesonic",company:"Writesonic",desc:"結合 AI 搜尋的文案生成，Chatsonic 整合網路即時資訊。",cats:["writing","data"],price:"freemium",priceLabel:"$16+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:83,data:68},color:"#059669",textColor:"#fff",emoji:"🌿"},
 
   // --- DATA ---
-  {id:39,name:"Julius AI",company:"Julius",desc:"對話式資料分析，上傳 CSV/Excel 即可對話查詢並自動作圖。",cats:["data","writing"],price:"freemium",priceLabel:"$20+/月",strengths:{video:0,image:30,audio:0,animation:0,writing:60,data:92},color:"#1e3a5f",textColor:"#fff"},
-  {id:40,name:"Perplexity AI",company:"Perplexity",desc:"AI 驅動搜尋引擎，即時引用學術/新聞來源，研究效率倍增。",cats:["data","writing"],price:"freemium",priceLabel:"$20+/月 Pro",strengths:{video:0,image:20,audio:0,animation:0,writing:80,data:90},color:"#1a1a2e",textColor:"#fff"},
-  {id:41,name:"Tableau AI",company:"Salesforce",desc:"Tableau 整合 Einstein AI，自然語言查詢企業 BI 資料。",cats:["data"],price:"paid",priceLabel:"$70+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:40,data:95},color:"#e8762b",textColor:"#fff"},
-  {id:42,name:"Microsoft Copilot",company:"Microsoft",desc:"深度整合 Office 365，Excel/PPT/Word 的 AI 加速套件。",cats:["data","writing","image"],price:"paid",priceLabel:"$30+/月",strengths:{video:0,image:55,audio:0,animation:0,writing:85,data:88},color:"#0078d4",textColor:"#fff"},
-  {id:43,name:"Gamma",company:"Gamma",desc:"AI 一鍵生成精美簡報/文件，適合快速簡報與提案製作。",cats:["data","writing","image"],price:"freemium",priceLabel:"$8+/月",strengths:{video:0,image:60,audio:0,animation:30,writing:78,data:70},color:"#7c3aed",textColor:"#fff"},
-  {id:44,name:"Mem AI",company:"Mem",desc:"AI 個人知識庫，自動連結筆記，知識管理與摘要生成。",cats:["data","writing"],price:"paid",priceLabel:"$14.99+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:75,data:82},color:"#0f766e",textColor:"#fff"},
-  {id:45,name:"MonkeyLearn",company:"Monkey Learn",desc:"No-Code 文本分析平台，情感分析/主題分類批量處理。",cats:["data"],price:"paid",priceLabel:"$299+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:45,data:88},color:"#059669",textColor:"#fff"},
+  {id:39,name:"Julius AI",company:"Julius",desc:"對話式資料分析，上傳 CSV/Excel 即可對話查詢並自動作圖。",cats:["data","writing"],price:"freemium",priceLabel:"$20+/月",strengths:{video:0,image:30,audio:0,animation:0,writing:60,data:92},color:"#1e3a5f",textColor:"#fff",emoji:"📊"},
+  {id:40,name:"Perplexity AI",company:"Perplexity",desc:"AI 驅動搜尋引擎，即時引用學術/新聞來源，研究效率倍增。",cats:["data","writing"],price:"freemium",priceLabel:"$20+/月 Pro",strengths:{video:0,image:20,audio:0,animation:0,writing:80,data:90},color:"#1a1a2e",textColor:"#fff",emoji:"🔍"},
+  {id:41,name:"Tableau AI",company:"Salesforce",desc:"Tableau 整合 Einstein AI，自然語言查詢企業 BI 資料。",cats:["data"],price:"paid",priceLabel:"$70+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:40,data:95},color:"#e8762b",textColor:"#fff",emoji:"📈"},
+  {id:42,name:"Microsoft Copilot",company:"Microsoft",desc:"深度整合 Office 365，Excel/PPT/Word 的 AI 加速套件。",cats:["data","writing","image"],price:"paid",priceLabel:"$30+/月",strengths:{video:0,image:55,audio:0,animation:0,writing:85,data:88},color:"#0078d4",textColor:"#fff",emoji:"🪟"},
+  {id:43,name:"Gamma",company:"Gamma",desc:"AI 一鍵生成精美簡報/文件，適合快速簡報與提案製作。",cats:["data","writing","image"],price:"freemium",priceLabel:"$8+/月",strengths:{video:0,image:60,audio:0,animation:30,writing:78,data:70},color:"#7c3aed",textColor:"#fff",emoji:"⚡"},
+  {id:44,name:"Mem AI",company:"Mem",desc:"AI 個人知識庫，自動連結筆記，知識管理與摘要生成。",cats:["data","writing"],price:"paid",priceLabel:"$14.99+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:75,data:82},color:"#0f766e",textColor:"#fff",emoji:"🧠"},
+  {id:45,name:"MonkeyLearn",company:"Monkey Learn",desc:"No-Code 文本分析平台，情感分析/主題分類批量處理。",cats:["data"],price:"paid",priceLabel:"$299+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:45,data:88},color:"#059669",textColor:"#fff",emoji:"🐒"},
 
   // --- INTEGRATION / MULTI ---
-  {id:46,name:"Zapier AI",company:"Zapier",desc:"AI 工作流自動化，6000+ 應用整合，AI Agent 任務委派。",cats:["data","writing"],price:"freemium",priceLabel:"$19.99+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:55,data:85},color:"#ff4a00",textColor:"#fff"},
-  {id:47,name:"Make (Integromat)",company:"Make",desc:"視覺化工作流，AI 模組串接各平台，自動化複雜任務。",cats:["data"],price:"freemium",priceLabel:"$9+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:40,data:88},color:"#6f42c1",textColor:"#fff"},
-  {id:48,name:"Synthesia",company:"Synthesia",desc:"企業級 AI 影片製作，160+ 數位人，教育訓練影片首選。",cats:["video","animation"],price:"paid",priceLabel:"$22+/月",strengths:{video:85,image:30,audio:65,animation:72,writing:40,data:0},color:"#4f46e5",textColor:"#fff"},
-  {id:49,name:"Pictory",company:"Pictory",desc:"長文章自動轉影片，字幕自動化，社群短影音快速製作。",cats:["video","writing"],price:"freemium",priceLabel:"$19+/月",strengths:{video:80,image:40,audio:50,animation:45,writing:70,data:0},color:"#0891b2",textColor:"#fff"},
-  {id:50,name:"Invideo AI",company:"Invideo",desc:"文字直接生成完整影片，含配樂/旁白/字幕，電商廣告強。",cats:["video","audio","writing"],price:"freemium",priceLabel:"$20+/月",strengths:{video:82,image:35,audio:60,animation:50,writing:68,data:0},color:"#059669",textColor:"#fff"}
+  {id:46,name:"Zapier AI",company:"Zapier",desc:"AI 工作流自動化，6000+ 應用整合，AI Agent 任務委派。",cats:["data","writing"],price:"freemium",priceLabel:"$19.99+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:55,data:85},color:"#ff4a00",textColor:"#fff",emoji:"⚡"},
+  {id:47,name:"Make (Integromat)",company:"Make",desc:"視覺化工作流，AI 模組串接各平台，自動化複雜任務。",cats:["data"],price:"freemium",priceLabel:"$9+/月",strengths:{video:0,image:0,audio:0,animation:0,writing:40,data:88},color:"#6f42c1",textColor:"#fff",emoji:"🔄"},
+  {id:48,name:"Synthesia",company:"Synthesia",desc:"企業級 AI 影片製作，160+ 數位人，教育訓練影片首選。",cats:["video","animation"],price:"paid",priceLabel:"$22+/月",strengths:{video:85,image:30,audio:65,animation:72,writing:40,data:0},color:"#4f46e5",textColor:"#fff",emoji:"🎬"},
+  {id:49,name:"Pictory",company:"Pictory",desc:"長文章自動轉影片，字幕自動化，社群短影音快速製作。",cats:["video","writing"],price:"freemium",priceLabel:"$19+/月",strengths:{video:80,image:40,audio:50,animation:45,writing:70,data:0},color:"#0891b2",textColor:"#fff",emoji:"🎞"},
+  {id:50,name:"Invideo AI",company:"Invideo",desc:"文字直接生成完整影片，含配樂/旁白/字幕，電商廣告強。",cats:["video","audio","writing"],price:"freemium",priceLabel:"$20+/月",strengths:{video:82,image:35,audio:60,animation:50,writing:68,data:0},color:"#059669",textColor:"#fff",emoji:"📹"},
 ];
 
+const CAT_COLORS = {video:"#7c3aed",image:"#0891b2",audio:"#059669",animation:"#d97706",writing:"#dc2626",data:"#4f46e5",chat:"#475569",code:"#166534"};
 const STR_COLORS = {video:"#7c3aed",image:"#0891b2",audio:"#059669",animation:"#d97706",writing:"#dc2626",data:"#4f46e5"};
 const STR_LABELS = {video:"影片",image:"圖片",audio:"音檔",animation:"動畫",writing:"文案",data:"資料"};
 const TAG_CLASS = {video:"tag-video",image:"tag-image",audio:"tag-audio",animation:"tag-animation",writing:"tag-writing",data:"tag-data",chat:"tag-chat",code:"tag-code","3d":"tag-3d",music:"tag-music"};
+
+const CATEGORY_SEARCH_TERMS = {
+  video:["影片","視頻","短影音","影像","剪輯","運鏡","影片生成","文字轉影片","圖片轉影片"],
+  image:["圖片","圖像","照片","生成圖","插畫","海報","logo","商標","修圖","設計","商品圖"],
+  audio:["音訊","音檔","聲音","配音","旁白","語音","錄音","音效","降噪","podcast"],
+  animation:["動畫","動態","動起來","角色動畫","人物動作","骨架","motion","3d"],
+  writing:["文案","寫作","文章","腳本","摘要","翻譯","企劃","貼文","內容","長文"],
+  data:["資料","數據","分析","表格","報告","研究","搜尋","圖表","知識庫","自動化"],
+  code:["程式","程式碼","寫程式","開發","code"],
+  music:["音樂","歌曲","作曲","編曲","配樂","歌詞"],
+  "3d":["3d","立體","建模","材質","骨架"]
+};
+
+const TOOL_SEARCH_TERMS = {
+  1:["電影感影片","高品質影片","物理模擬","文字轉影片"],
+  2:["照片轉影片","圖片轉影片","圖片動起來","影片運鏡","影片特效","motion brush"],
+  3:["照片轉影片","圖片動起來","短影音","特效轉換","lip sync","音效"],
+  4:["照片轉影片","中文影片","寫實動作","人物動作","長鏡頭"],
+  5:["數位人","虛擬人","口播影片","虛擬主播","多語翻譯"],
+  8:["影片剪輯","podcast剪輯","逐字稿","聲音複製","文字剪輯"],
+  9:["藝術圖像","寫實圖片","概念設計","風格探索"],
+  10:["文字生成圖片","提示詞生圖","chatgpt生圖"],
+  11:["免費做圖","開源生圖","本地部署","模型訓練","lora"],
+  12:["商業設計","修圖","生成填色","photoshop","illustrator"],
+  13:["文字海報","圖片文字","logo","商標","排版"],
+  16:["快速設計","快速做簡報","簡報","社群圖片","影片設計","品牌素材"],
+  17:["生成歌曲","作曲","編曲","歌詞","完整歌曲"],
+  18:["生成音樂","歌曲延伸","重混","曲風控制"],
+  19:["自然配音","自然旁白配音","真人旁白","真人聲音","聲音克隆","多語配音","旁白","dubbing"],
+  20:["自然旁白","自然旁白配音","專業配音","簡報配音","廣告配音","多語音"],
+  22:["錄音降噪","語音增強","podcast","逐字稿","清理聲音"],
+  25:["圖片角色動畫","角色動作","人物跳舞","動作遷移"],
+  27:["人物動畫","全身動作","開源動畫"],
+  28:["3d場景","網站3d","生成材質","網頁嵌入"],
+  31:["整理資料","整理長篇資料","長文摘要","文案","寫程式","資料分析","多功能助理"],
+  32:["整理長篇資料","長文理解","長文摘要","高品質寫作","程式設計"],
+  33:["google搜尋","研究資料","即時資訊","多模態","gmail","drive"],
+  34:["筆記整理","文件摘要","翻譯","草稿","工作管理"],
+  35:["行銷文案","品牌語調","廣告文案","seo"],
+  36:["批量文案","行銷自動化","跨渠道文案"],
+  39:["csv分析","excel分析","表格分析","自動畫圖","對話式資料分析"],
+  40:["查資料","研究","引用來源","新聞","學術搜尋"],
+  41:["企業資料分析","bi","自然語言查詢","商業圖表"],
+  42:["ppt","excel","word","office","快速簡報","快速做簡報","辦公整合"],
+  43:["快速簡報","快速做簡報","ppt","提案","投影片","一鍵生成簡報"],
+  44:["個人知識庫","筆記連結","知識管理","摘要"],
+  45:["文本分析","情感分析","主題分類","批量分析"],
+  46:["自動化","串接","串接自動化工作流","工作流","應用整合","ai agent"],
+  47:["自動化","串接","串接自動化工作流","視覺化工作流","複雜流程","平台整合"],
+  48:["數位人影片","企業培訓","教育影片","虛擬人"],
+  49:["文章轉影片","自動字幕","社群短影音","長文轉影片"],
+  50:["文字轉影片","自動配樂","自動旁白","自動字幕","電商廣告"]
+};
+
+const SEARCH_INTENT_GROUPS = [
+  {triggers:["影片","視頻","短影音","拍片","剪片","運鏡","文字轉影片","文章轉影片"],terms:CATEGORY_SEARCH_TERMS.video},
+  {triggers:["圖片","圖像","照片","海報","logo","商標","插畫","修圖","去背","商品圖","生成圖","做圖","生圖"],terms:CATEGORY_SEARCH_TERMS.image},
+  {triggers:["配音","旁白","語音","聲音","音訊","音檔","錄音","降噪","逐字稿","podcast"],terms:CATEGORY_SEARCH_TERMS.audio},
+  {triggers:["音樂","歌曲","作曲","編曲","配樂","歌詞","混音","母帶"],terms:CATEGORY_SEARCH_TERMS.music},
+  {triggers:["動畫","動起來","人物動作","角色動作","骨架","3d動畫","動態圖示","lottie"],terms:CATEGORY_SEARCH_TERMS.animation},
+  {triggers:["文案","文章","寫作","腳本","摘要","翻譯","企劃","貼文","履歷","長文"],terms:CATEGORY_SEARCH_TERMS.writing},
+  {triggers:["資料","數據","分析","表格","csv","excel","圖表","報告","知識庫"],terms:CATEGORY_SEARCH_TERMS.data},
+  {triggers:["簡報","ppt","提案","投影片"],terms:["簡報","ppt","提案","投影片","文件","office","設計"]},
+  {triggers:["搜尋","研究","找資料","查資料","來源","引用","新聞","學術"],terms:["搜尋","研究","資料","來源","引用","新聞","學術"]},
+  {triggers:["自動化","工作流","串接","整合","workflow","api"],terms:["自動化","工作流","應用整合","串接","api"]},
+  {triggers:["程式","程式碼","寫程式","開發","code"],terms:CATEGORY_SEARCH_TERMS.code},
+  {triggers:["3d","立體","建模","材質"],terms:CATEGORY_SEARCH_TERMS["3d"]},
+  {triggers:["數位人","虛擬人","主播","口播","唇形","對嘴"],terms:["數位人","虛擬人","主播","口播","lip sync","影片","配音"]},
+  {triggers:["行銷","廣告","seo","品牌","社群","電商"],terms:["行銷","廣告","seo","品牌","社群","文案","電商"]},
+  {triggers:["免費","不用錢","不花錢","便宜","試用"],terms:["免費","免費試用","開源","freemium"]},
+  {triggers:["付費","訂閱","商用","商業使用"],terms:["付費","訂閱","商用","商業使用"]}
+];
+
+const QUESTION_FILLERS = /(請問|可以幫我|幫我|我想要|我想|我需要|有沒有|哪一個|哪個|什麼|推薦一下|推薦|適合我|適合|能不能|是否可以|如何|怎麼|用來|工具|人工智慧|把)/g;
+
+function cleanSearchText(value){
+  return String(value??"")
+    .normalize("NFKC")
+    .toLocaleLowerCase("zh-Hant")
+    .replace(/視頻/g,"影片")
+    .replace(/音頻/g,"音訊")
+    .replace(/(做成|變成|轉成)/g,"轉")
+    .replace(/(做圖|生圖)/g,"生成圖")
+    .replace(/[^\p{L}\p{N}+#.-]+/gu," ")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+function extractSearchTerms(rawQuery){
+  const normalized=cleanSearchText(rawQuery);
+  const compact=normalized.replace(/\s+/g,"");
+  const concise=normalized.replace(QUESTION_FILLERS," ").replace(/\s+/g," ").trim();
+  const terms=concise.split(" ").filter(term=>term.length>1 || /[a-z0-9]/i.test(term));
+
+  SEARCH_INTENT_GROUPS.forEach(group=>{
+    const matchedTriggers=group.triggers.filter(trigger=>{
+      const normalizedTrigger=cleanSearchText(trigger).replace(/\s+/g,"");
+      return normalizedTrigger && compact.includes(normalizedTrigger);
+    });
+    if(matchedTriggers.length) terms.push(...matchedTriggers,...group.terms);
+  });
+
+  return [...new Set(terms.map(cleanSearchText).filter(Boolean))].slice(0,24);
+}
+
+function buildSearchDocument(ai){
+  const categoryTerms=ai.cats.flatMap(cat=>CATEGORY_SEARCH_TERMS[cat]||[]);
+  const strengthTerms=Object.entries(ai.strengths)
+    .filter(([,score])=>score>=40)
+    .map(([cat])=>STR_LABELS[cat]||cat);
+  const priceTerms={
+    free:["免費","開源","不用錢"],
+    freemium:["免費","試用","免費額度","付費升級","freemium"],
+    paid:["付費","訂閱","商用"]
+  }[ai.price]||[];
+
+  return {
+    id:ai.id,
+    name:ai.name,
+    company:ai.company,
+    desc:ai.desc,
+    categories:ai.cats.map(cat=>STR_LABELS[cat]||cat).join(" "),
+    keywords:[...categoryTerms,...strengthTerms,...priceTerms,...(TOOL_SEARCH_TERMS[ai.id]||[]),ai.priceLabel].join(" ")
+  };
+}
+
+const SEARCH_DOCUMENTS=AI_DATA.map(buildSearchDocument);
+const SEARCH_DOCUMENT_MAP=new Map(SEARCH_DOCUMENTS.map(document=>[document.id,document]));
+const fuzzySearch=typeof Fuse!=="undefined"
+  ? new Fuse(SEARCH_DOCUMENTS,{
+      includeScore:true,
+      threshold:0.35,
+      ignoreLocation:true,
+      minMatchCharLength:2,
+      keys:[
+        {name:"name",weight:0.30},
+        {name:"company",weight:0.10},
+        {name:"desc",weight:0.22},
+        {name:"categories",weight:0.16},
+        {name:"keywords",weight:0.22}
+      ]
+    })
+  : null;
+
+function getSearchResults(rawQuery){
+  const terms=extractSearchTerms(rawQuery);
+  if(!terms.length) return AI_DATA.map(ai=>ai.id);
+  const compactQuery=cleanSearchText(rawQuery).replace(/\s+/g,"");
+  const conciseQuery=cleanSearchText(rawQuery).replace(QUESTION_FILLERS,"").replace(/\s+/g,"");
+  const scores=new Map();
+
+  if(fuzzySearch){
+    terms.forEach(term=>{
+      fuzzySearch.search(term,{limit:50}).forEach(result=>{
+        const document=SEARCH_DOCUMENT_MAP.get(result.item.id);
+        const searchBlob=cleanSearchText([document.name,document.company,document.desc,document.categories,document.keywords].join(" "));
+        const exactBoost=searchBlob.includes(term)?1.35:1;
+        const isDirectTerm=compactQuery.includes(term.replace(/\s+/g,""));
+        const intentWeight=isDirectTerm?2.4:0.65;
+        const relevance=Math.max(0.05,1-(result.score??1))*exactBoost*intentWeight;
+        scores.set(result.item.id,(scores.get(result.item.id)||0)+relevance);
+      });
+    });
+  }else{
+    SEARCH_DOCUMENTS.forEach(document=>{
+      const searchBlob=cleanSearchText([document.name,document.company,document.desc,document.categories,document.keywords].join(" "));
+      const matchedTerms=terms.filter(term=>searchBlob.includes(term));
+      if(matchedTerms.length) scores.set(document.id,matchedTerms.length);
+    });
+  }
+
+  if(conciseQuery.length>=2){
+    SEARCH_DOCUMENTS.forEach(document=>{
+      const keywordBlob=cleanSearchText(document.keywords).replace(/\s+/g,"");
+      if(keywordBlob.includes(conciseQuery)){
+        scores.set(document.id,(scores.get(document.id)||0)+10);
+      }
+    });
+  }
+
+  const ranked=[...scores.entries()].sort((a,b)=>b[1]-a[1]);
+  const topScore=ranked[0]?.[1]||0;
+  const scoreFloor=Math.max(0.35,topScore*0.16);
+  return ranked
+    .filter(([,score])=>score>=scoreFloor)
+    .slice(0,24)
+    .map(([id])=>id);
+}
 
 const TOOL_DOMAINS = {
   1:"openai.com",2:"runwayml.com",3:"pika.art",4:"klingai.com",5:"heygen.com",
@@ -520,106 +1339,6 @@ const TOOL_DOMAINS = {
   41:"tableau.com",42:"copilot.microsoft.com",43:"gamma.app",44:"mem.ai",45:"monkeylearn.com",
   46:"zapier.com",47:"make.com",48:"synthesia.io",49:"pictory.ai",50:"invideo.io"
 };
-
-/* =========================================================
-   FUZZY SEARCH ENGINE (模糊搜尋演算法)
-========================================================= */
-
-// Levenshtein 編輯距離算術
-function levenshteinDistance(a, b) {
-  if (a.length === 0) return b.length;
-  if (b.length === 0) return a.length;
-  const matrix = Array.from({ length: b.length + 1 }, (_, i) => [i]);
-  for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
-
-  for (let i = 1; i <= b.length; i++) {
-    for (let j = 1; j <= a.length; j++) {
-      if (b.charAt(i - 1) === a.charAt(j - 1)) {
-        matrix[i][j] = matrix[i - 1][j - 1];
-      } else {
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j - 1] + 1,
-          matrix[i][j - 1] + 1,
-          matrix[i - 1][j] + 1
-        );
-      }
-    }
-  }
-  return matrix[b.length][a.length];
-}
-
-// 子序列匹配 (如: "mj" -> "midjourney")
-function isSubsequence(query, target) {
-  let qIdx = 0;
-  for (let tIdx = 0; tIdx < target.length && qIdx < query.length; tIdx++) {
-    if (query[qIdx] === target[tIdx]) qIdx++;
-  }
-  return qIdx === query.length;
-}
-
-// 計算單一文本與關鍵字的模糊匹配分數
-function getSingleMatchScore(query, text) {
-  if (!query || !text) return 0;
-  const q = query.toLowerCase();
-  const t = text.toLowerCase();
-
-  // 1. 完全相同
-  if (t === q) return 100;
-  // 2. 開頭完全一致
-  if (t.startsWith(q)) return 80;
-  // 3. 包含關鍵字子字串
-  if (t.includes(q)) return 60;
-  // 4. 子序列模糊匹配
-  if (isSubsequence(q, t)) return 35;
-
-  // 5. 拼寫相近 (編輯距離容錯)
-  if (q.length >= 3) {
-    const words = t.split(/[\s,.-]+/);
-    for (const w of words) {
-      const dist = levenshteinDistance(q, w);
-      if (q.length <= 4 && dist <= 1) return 30;
-      if (q.length > 4 && dist <= 2) return 25;
-    }
-  }
-
-  return 0;
-}
-
-// 計算 AI 工具在特定搜尋詞下的綜合相關度分數
-function calculateToolRelevance(query, tool) {
-  if (!query) return 1;
-  const tokens = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
-  let totalScore = 0;
-
-  tokens.forEach(token => {
-    const nameScore = getSingleMatchScore(token, tool.name) * 3.5;
-    const companyScore = getSingleMatchScore(token, tool.company) * 2;
-    const descScore = getSingleMatchScore(token, tool.desc) * 1.2;
-    const catLabels = tool.cats.map(c => STR_LABELS[c] || c).join(" ");
-    const catScore = getSingleMatchScore(token, catLabels) * 2;
-
-    const tokenMax = Math.max(nameScore, companyScore, descScore, catScore);
-    totalScore += tokenMax;
-  });
-
-  return totalScore;
-}
-
-// 高亮關鍵字輔助函式
-function highlightText(text, query) {
-  if (!query) return text;
-  const tokens = query.trim().split(/\s+/).filter(Boolean);
-  if (tokens.length === 0) return text;
-
-  // 將關鍵字轉為正規表達式匹配
-  const pattern = tokens.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
-  const regex = new RegExp(`(${pattern})`, 'gi');
-  return text.replace(regex, '<mark class="search-highlight">$1</mark>');
-}
-
-/* =========================================================
-   UI & DOM CONTROLS
-========================================================= */
 
 function getInitials(name){
   const cleaned=name.replace(/[·.()]/g," ").replace(/\b(AI|Gen|Pro|Ultra)\b/gi," ").replace(/\d+/g," ").trim();
@@ -643,45 +1362,26 @@ let activeCategory = "all";
 let activePrice = "all";
 let activeSort = "recommended";
 let compareList = [];
-let searchDebounceTimer = null;
+let lastFocusedElement = null;
 
-function buildAndRenderCards(){
+function buildCards(){
   const grid = document.getElementById("ai-grid");
   grid.innerHTML = "";
-  
-  const searchInput = document.getElementById("search-input");
-  const query = searchInput ? searchInput.value.trim() : "";
-
-  // 1. 計算所有 AI 工具的分數
-  let list = AI_DATA.map(ai => ({
-    ...ai,
-    relevance: calculateToolRelevance(query, ai)
-  }));
-
-  // 2. 篩選 (分類與價格)
-  list = list.filter(ai => {
-    const categoryMatch = activeCategory === "all" || ai.cats.includes(activeCategory);
-    const priceMatch = activePrice === "all" || ai.price === activePrice;
-    const searchMatch = !query || ai.relevance > 0;
-    return categoryMatch && priceMatch && searchMatch;
+  const priceOrder = {free:0,freemium:1,paid:2};
+  const data = [...AI_DATA].sort((a,b)=>{
+    if(activeSort==="name") return a.name.localeCompare(b.name,"zh-Hant");
+    if(activeSort==="price") return priceOrder[a.price]-priceOrder[b.price] || a.id-b.id;
+    return a.id-b.id;
   });
 
-  // 3. 排序 (如果有搜尋關鍵字，優先使用相關度排序)
-  const priceOrder = {free:0, freemium:1, paid:2};
-  list.sort((a,b) => {
-    if (query) {
-      return b.relevance - a.relevance; // 相關度高者優先
-    }
-    if (activeSort === "name") return a.name.localeCompare(b.name, "zh-Hant");
-    if (activeSort === "price") return priceOrder[a.price] - priceOrder[b.price] || a.id - b.id;
-    return a.id - b.id;
-  });
-
-  // 4. 更新 DOM
-  list.forEach(ai => {
+  data.forEach(ai=>{
     const card = document.createElement("article");
     card.className = "ai-card";
-    card.id = "card-" + ai.id;
+    card.id = "card-"+ai.id;
+    card.dataset.cats = ai.cats.join(",");
+    card.dataset.name = ai.name.toLowerCase();
+    card.dataset.desc = ai.desc.toLowerCase();
+    card.dataset.price = ai.price;
 
     const tagsHtml = ai.cats.map(c=>`<span class="tag ${TAG_CLASS[c]||'tag-chat'}">${STR_LABELS[c]||c}</span>`).join("");
     const priceClass = ai.price==="free"?"price-free":ai.price==="freemium"?"price-freemium":"price-paid";
@@ -695,13 +1395,13 @@ function buildAndRenderCards(){
         <div style="display:flex;align-items:center;gap:12px;">
           ${renderToolLogo(ai)}
           <div>
-            <h3 class="ai-name">${highlightText(ai.name, query)}</h3>
-            <p class="ai-company">${highlightText(ai.company, query)}</p>
+            <h3 class="ai-name">${ai.name}</h3>
+            <p class="ai-company">${ai.company}</p>
           </div>
         </div>
-        <button type="button" class="add-compare-btn${compareList.includes(ai.id)?" added":""}" id="cmp-${ai.id}" onclick="toggleCompare(${ai.id})" aria-label="加入比較 ${ai.name}">${compareList.includes(ai.id)?"✓":"+"}</button>
+        <button type="button" class="add-compare-btn${compareList.includes(ai.id)?" added":""}" id="cmp-${ai.id}" onclick="toggleCompare(${ai.id})" aria-label="${compareList.includes(ai.id)?"從比較中移除":"加入比較"} ${ai.name}" aria-pressed="${compareList.includes(ai.id)}">${compareList.includes(ai.id)?"✓":"+"}</button>
       </div>
-      <p class="ai-desc">${highlightText(ai.desc, query)}</p>
+      <p class="ai-desc">${ai.desc}</p>
       <div class="ai-tags">${tagsHtml}</div>
       <div class="strengths-wrap">${strRows}</div>
       <div class="ai-price">
@@ -710,25 +1410,40 @@ function buildAndRenderCards(){
       </div>`;
     grid.appendChild(card);
   });
-
-  // 5. 更新結果統計與 UI 狀態
-  document.getElementById("result-num").textContent = list.length;
-  document.getElementById("no-results").classList.toggle("visible", list.length === 0);
-  document.getElementById("search-clear").classList.toggle("visible", query.length > 0);
 }
 
-function handleSearchInput() {
-  clearTimeout(searchDebounceTimer);
-  searchDebounceTimer = setTimeout(() => {
-    buildAndRenderCards();
-  }, 120); // 120ms 防抖處理，確保輸入極度流暢
+function filterCards(){
+  const searchInput = document.getElementById("search-input");
+  const q = searchInput.value.trim().toLocaleLowerCase("zh-Hant");
+  const searchResults = q?getSearchResults(q):[];
+  const searchRank = new Map(searchResults.map((id,index)=>[id,index]));
+  let count=0;
+  AI_DATA.forEach(ai=>{
+    const card = document.getElementById("card-"+ai.id);
+    const categoryMatch = activeCategory==="all" || ai.cats.includes(activeCategory);
+    const priceMatch = activePrice==="all" || ai.price===activePrice;
+    const searchMatch = !q || searchRank.has(ai.id);
+    const show = categoryMatch && priceMatch && searchMatch;
+    card.classList.toggle("hidden",!show);
+    if(q && searchMatch) card.style.order=String(searchRank.get(ai.id));
+    else card.style.removeProperty("order");
+    if(show) count++;
+  });
+  document.getElementById("result-num").textContent = count;
+  document.getElementById("no-results").classList.toggle("visible",count===0);
+  document.getElementById("search-clear").classList.toggle("visible",q.length>0);
 }
 
 function setFilter(btn,cat){
   document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
   btn.classList.add("active");
   activeCategory=cat;
-  buildAndRenderCards();
+  filterCards();
+}
+function setFilterById(cat){
+  const btn = document.querySelector(`.filter-btn[data-cat="${cat}"]`);
+  if(btn) setFilter(btn,cat);
+  document.getElementById("tools").scrollIntoView({behavior:"smooth"});
 }
 
 function resetFilters(){
@@ -739,7 +1454,8 @@ function resetFilters(){
   document.getElementById("price-filter").value="all";
   document.getElementById("sort-select").value="recommended";
   document.querySelectorAll(".filter-btn").forEach(btn=>btn.classList.toggle("active",btn.dataset.cat==="all"));
-  buildAndRenderCards();
+  buildCards();
+  filterCards();
 }
 
 function toggleCompare(id){
@@ -749,7 +1465,15 @@ function toggleCompare(id){
     if(compareList.length>=MAX_COMPARE){alert(`最多同時比較 ${MAX_COMPARE} 個工具`);return;}
     compareList.push(id);
   }
-  buildAndRenderCards();
+  const compareButton=document.getElementById("cmp-"+id);
+  const ai=AI_DATA.find(item=>item.id===id);
+  const isAdded=compareList.includes(id);
+  if(compareButton){
+    compareButton.classList.toggle("added",isAdded);
+    compareButton.textContent=isAdded?"✓":"+";
+    compareButton.setAttribute("aria-pressed",String(isAdded));
+    compareButton.setAttribute("aria-label",`${isAdded?"從比較中移除":"加入比較"} ${ai.name}`);
+  }
   updateComparePanel();
 }
 
@@ -759,21 +1483,32 @@ function updateComparePanel(){
   const btn = document.getElementById("compare-open-btn");
   const badge = document.getElementById("compare-count-badge");
   panel.classList.toggle("visible",compareList.length>0);
+  panel.setAttribute("aria-hidden",String(compareList.length===0));
   if(btn){btn.style.display=compareList.length>0?"inline-flex":"none"; badge.textContent=compareList.length;}
   chips.innerHTML = compareList.map(id=>{
     const ai = AI_DATA.find(a=>a.id===id);
-    return `<div class="compare-chip">${renderToolLogo(ai,true)}<span>${ai.name}</span><button type="button" class="compare-chip-remove" onclick="toggleCompare(${id})" aria-label="移除 ${ai.name}">✕</button></div>`;
+    return `<div class="compare-chip">${renderToolLogo(ai,true)}<span>${ai.name}</span><button type="button" class="compare-chip-remove" onclick="toggleCompare(${id})" aria-label="從比較中移除 ${ai.name}">✕</button></div>`;
   }).join("");
 }
 
 function clearCompare(){
+  compareList.forEach(id=>{
+    const btn=document.getElementById("cmp-"+id);
+    const ai=AI_DATA.find(item=>item.id===id);
+    if(btn){
+      btn.classList.remove("added");
+      btn.textContent="+";
+      btn.setAttribute("aria-pressed","false");
+      btn.setAttribute("aria-label",`加入比較 ${ai.name}`);
+    }
+  });
   compareList=[];
-  buildAndRenderCards();
   updateComparePanel();
 }
 
 function openCompareModal(){
   if(compareList.length<2){alert("請至少選擇 2 個工具進行比較");return;}
+  lastFocusedElement=document.activeElement;
   const items = compareList.map(id=>AI_DATA.find(a=>a.id===id));
   const cats = ["video","image","audio","animation","writing","data"];
   const rows = cats.map(cat=>{
@@ -786,53 +1521,98 @@ function openCompareModal(){
 
   const priceRow = `<tr><th scope="row" class="row-head">定價</th>${items.map(ai=>`<td><span class="price-badge ${ai.price==="free"?"price-free":ai.price==="freemium"?"price-freemium":"price-paid"}">${ai.priceLabel}</span></td>`).join("")}</tr>`;
   const companyRow = `<tr><th scope="row" class="row-head">公司</th>${items.map(ai=>`<td style="font-family:var(--font-en);font-size:16px;color:var(--color-muted)">${ai.company}</td>`).join("")}</tr>`;
+
   const headers = `<th scope="col" style="width:120px">項目</th>${items.map(ai=>`<th scope="col"><div style="display:flex;align-items:center;gap:8px;">${renderToolLogo(ai,true)}${ai.name}</div></th>`).join("")}`;
 
   document.getElementById("modal-body").innerHTML = `
     <table class="compare-table">
       <thead><tr>${headers}</tr></thead>
       <tbody>${companyRow}${priceRow}${rows}</tbody>
-    </table>`;
+    </table>
+    <p style="margin-top:24px;font-size:16px;color:var(--color-muted);font-family:var(--font-zh);">分數 0-100，僅供參考，代表該工具在此類別的相對強項。</p>`;
   const modal=document.getElementById("compare-modal");
   modal.classList.add("visible");
+  modal.setAttribute("aria-hidden","false");
   document.body.classList.add("modal-open");
+  modal.querySelector(".modal-box").focus();
 }
 
 function closeCompareModal(){
   const modal=document.getElementById("compare-modal");
   modal.classList.remove("visible");
+  modal.setAttribute("aria-hidden","true");
   document.body.classList.remove("modal-open");
+  if(lastFocusedElement) lastFocusedElement.focus();
 }
 
-// 初始化綁定
-document.addEventListener("DOMContentLoaded", () => {
-  buildAndRenderCards();
-  updateComparePanel();
+// Header scroll
+const header = document.getElementById("site-header");
+window.addEventListener("scroll",()=>{
+  header.classList.toggle("is-scrolled",window.scrollY>60);
+});
 
-  document.getElementById("search-input").addEventListener("input", handleSearchInput);
-  document.getElementById("search-clear").addEventListener("click",()=>{
-    const input=document.getElementById("search-input");
-    input.value="";
-    input.focus();
-    buildAndRenderCards();
+// Mobile menu
+const menuButton=document.getElementById("menu-button");
+menuButton.addEventListener("click",()=>{
+  const isOpen=document.body.classList.toggle("menu-open");
+  menuButton.setAttribute("aria-expanded",String(isOpen));
+  menuButton.setAttribute("aria-label",isOpen?"關閉選單":"開啟選單");
+});
+document.querySelectorAll(".nav-link").forEach(link=>link.addEventListener("click",()=>{
+  document.body.classList.remove("menu-open");
+  menuButton.setAttribute("aria-expanded","false");
+  menuButton.setAttribute("aria-label","開啟選單");
+}));
+
+// Close modal on overlay click
+document.getElementById("compare-modal").addEventListener("click",function(e){
+  if(e.target===this) closeCompareModal();
+});
+
+buildCards();
+filterCards();
+updateComparePanel();
+
+document.getElementById("search-input").addEventListener("input",filterCards);
+document.getElementById("search-clear").addEventListener("click",()=>{
+  const input=document.getElementById("search-input");
+  input.value="";
+  input.focus();
+  filterCards();
+});
+document.querySelectorAll(".filter-btn[data-cat]").forEach(btn=>{
+  btn.addEventListener("click",()=>setFilter(btn,btn.dataset.cat));
+});
+document.getElementById("price-filter").addEventListener("change",e=>{
+  activePrice=e.target.value;
+  filterCards();
+});
+document.getElementById("sort-select").addEventListener("change",e=>{
+  activeSort=e.target.value;
+  buildCards();
+  filterCards();
+});
+document.getElementById("reset-filter").addEventListener("click",resetFilters);
+document.getElementById("no-results-reset").addEventListener("click",resetFilters);
+document.querySelectorAll("[data-footer-filter]").forEach(link=>{
+  link.addEventListener("click",()=>setFilterById(link.dataset.footerFilter));
+});
+document.querySelectorAll("[data-footer-price]").forEach(link=>{
+  link.addEventListener("click",()=>{
+    activePrice=link.dataset.footerPrice;
+    document.getElementById("price-filter").value=activePrice;
+    filterCards();
   });
-
-  document.querySelectorAll(".filter-btn[data-cat]").forEach(btn=>{
-    btn.addEventListener("click",()=>setFilter(btn,btn.dataset.cat));
-  });
-
-  document.getElementById("price-filter").addEventListener("change",e=>{
-    activePrice=e.target.value;
-    buildAndRenderCards();
-  });
-
-  document.getElementById("sort-select").addEventListener("change",e=>{
-    activeSort=e.target.value;
-    buildAndRenderCards();
-  });
-
-  document.getElementById("reset-filter").addEventListener("click",resetFilters);
-  document.getElementById("no-results-reset").addEventListener("click",resetFilters);
+});
+document.addEventListener("keydown",event=>{
+  if(event.key==="Escape"){
+    if(document.getElementById("compare-modal").classList.contains("visible")) closeCompareModal();
+    if(document.body.classList.contains("menu-open")){
+      document.body.classList.remove("menu-open");
+      menuButton.setAttribute("aria-expanded","false");
+      menuButton.focus();
+    }
+  }
 });
 </script>
 </body>
